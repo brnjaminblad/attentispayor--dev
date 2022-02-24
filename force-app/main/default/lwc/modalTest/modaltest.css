@@ -1,0 +1,5 @@
+.slds-nubbin_bottom-left:after, .slds-nubbin_bottom-left:before {
+    display: none!important;
+    width: 0!important;
+    height: 0!important;
+}

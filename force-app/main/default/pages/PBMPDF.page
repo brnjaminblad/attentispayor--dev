@@ -1,0 +1,190 @@
+<apex:page controller="PMBPDF" renderAs="pdf">
+
+    <head>
+        <style>
+            p {
+                font-weight: bold;
+            }
+
+            .justTest {
+                font-size: 30px;
+            }
+        </style>
+    </head>
+
+    <table style="width: 100%">
+        <tr>
+            <th></th>
+            <th style="min-width: 250px"></th>
+            <th></th>
+          </tr>
+          <tr>
+            <td>
+              <!--  <apex:image url="{!$Resource.ElixirLogo}" width="160" height="96"/> -->
+                <apex:image url="{!$Resource.AttentisLogo}" width="197" height="40"/>
+            </td>
+            <td></td>
+            <td>
+                <p style="font-size: 22px; text-align: center; font-weight: bold; font-family: sans-serif; color: #848687">Pharmacy Medication Product Quote</p>
+            </td>
+          </tr>
+    </table>
+
+    <div style="border-bottom: 5px solid #3B6AA0; padding: 0 20px 20px 20px; margin-bottom: 0px">
+        <p style="font-weight: bold; font-family: sans-serif; color: #848687">Developed for</p>
+        <table style="width: 100%">
+            <tr>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+            <tr>
+              <td>
+                <apex:outputText style="font-weight: Normal; font-family: sans-serif; color: #848687" value="{!accountInformation.Name}"/>
+              </td>
+              
+              <td style="min-width: 120px"></td>
+              <td style="font-weight: bold; font-family: sans-serif; color: #848687">Created Date:</td>
+              <td>
+                <apex:outputText value="{0, date, MMMM d','  yyyy}" style="font-weight: Normal; font-family: sans-serif; color: #848687">
+                    <apex:param value="{!quoteInformation.CreatedDate}" /> 
+                </apex:outputText>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <apex:outputText style="font-weight: Normal; font-family: sans-serif; color: #848687" value="{!accountInformation.BillingStreet}"/>
+              </td>
+              <td></td>
+              <td style="font-weight: bold; font-family: sans-serif; color: #848687">Proposed Effective Date:</td>
+              <td>
+                <apex:outputText value="{0, date, MMMM dd','  yyyy}" style="font-weight: Normal; font-family: sans-serif; color: #848687">
+                    <apex:param value="{!quoteInformation.vlocity_ins__EffectiveDate__c}" /> 
+                </apex:outputText>
+              </td>
+            </tr>
+            <tr>
+                <td>
+                    <apex:outputText style="font-weight: Normal; font-family: sans-serif; color: #848687" value="{!accountInformation.BillingCity}, "/>
+                    <apex:outputText style="font-weight: Normal; font-family: sans-serif; color: #848687" value="{!accountInformation.BillingState}, "/>
+                    <apex:outputText style="font-weight: Normal; font-family: sans-serif; color: #848687" value="{!accountInformation.BillingPostalCode}"/>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+        </table>
+    </div>
+
+
+
+    <apex:repeat value="{!quoteLineItems}" var="quoteLineItem" id="theRepeat">
+
+        <div style="border-bottom: 5px solid #3B6AA0; padding: 20px; margin-bottom: 0px">
+            <apex:outputText style="font-weight: bold; font-family: sans-serif; color: #848687" value="{!quoteLineItem.Product2.Name}"/><br/>
+            
+            <p style="font-weight: bold; font-family: sans-serif; color: white; text-align: center; background-color: #aaafaa">INPUTS</p>
+
+            <table style="width: 100%">
+                <tr>
+                    <td style="text-align: center; font-family: sans-serif; font-weight: bold; color: #848687">
+                        Generic Proposed IC Discount
+                    </td>
+                    <td style="text-align: center; font-family: sans-serif; font-weight: bold; color: #848687">
+                        Generic Proposed DF/RX
+                    </td>
+                    <td style="text-align: center; font-family: sans-serif; font-weight: bold; color: #848687">
+                        Brand Proposed IC Discount
+                    </td>
+                    <td style="text-align: center; font-family: sans-serif; font-weight: bold; color: #848687">
+                        Brand Proposed DF/RX
+                    </td>
+                </tr>
+                <tr>
+
+                </tr>
+                <tr>
+                    <td style="text-align: center; font-family: sans-serif">
+                        <apex:outputText style="font-weight: Normal; font-family: sans-serif; color: black" value="{!quoteLineItem.Generic_Proposed_IC_Discount__c}%"/>
+                    </td>
+                    <td style="text-align: center; font-family: sans-serif">
+                        <apex:outputText style="font-weight: Normal; font-family: sans-serif; color: black" value="${!quoteLineItem.Generic_Proposed_DF_RX__c}"/>
+                    </td>
+                    <td style="text-align: center; font-family: sans-serif">
+                        <apex:outputText style="font-weight: Normal; font-family: sans-serif; color: black" value="{!quoteLineItem.Brand_Proposed_IC_Discount__c}%"/>
+                    </td>
+                    <td style="text-align: center; font-family: sans-serif">
+                        <apex:outputText style="font-weight: Normal; font-family: sans-serif; color: black" value="${!quoteLineItem.Brand_Proposed_DF_RX__c}"/>
+                    </td>
+                </tr>
+            </table>
+
+            <p style="font-weight: bold; font-family: sans-serif; color: white; text-align: center; background-color: #60a596">RESULTS</p>
+
+            <table style="width: 100%">
+
+                <tr>
+                    <td>
+
+                    </td>
+                    <td style="text-align: center; font-family: sans-serif; font-weight: bold; color: #848687">
+                        Billable Guarantee DF
+                    </td>
+                    <td style="text-align: center; font-family: sans-serif; font-weight: bold; color: #848687">
+                        Risk/Spread DF
+                    </td>
+                    <td style="text-align: center; font-family: sans-serif; font-weight: bold; color: #848687">
+                        Billable Guarantee IC
+                    </td>
+                    <td style="text-align: center; font-family: sans-serif; font-weight: bold; color: #848687">
+                        Risk/Spread IC
+                    </td>
+                </tr>
+                <tr>
+                    
+                </tr>
+                <tr>
+                    <td style="text-align: center; font-family: sans-serif; font-weight: bold; color: #203f63">
+                        Generic
+                    </td>
+                    <td style="text-align: center; font-family: sans-serif">
+                        <apex:outputText style="font-weight: Normal; font-family: sans-serif; color: black" value="${!quoteLineItem.Generic_Billable_Guarantee_DF__c}"/>
+                    </td>
+                    <td style="text-align: center; font-family: sans-serif">
+                        <apex:outputText style="font-weight: Normal; font-family: sans-serif; color: black" value="${!quoteLineItem.Generic_Risk_Spread_DF__c}"/>
+                    </td>
+                    <td style="text-align: center; font-family: sans-serif">
+                        <apex:outputText style="font-weight: Normal; font-family: sans-serif; color: black" value="${!quoteLineItem.Generic_Billable_Guarantee_IC__c}"/>
+                    </td>
+                    <td style="text-align: center; font-family: sans-serif">
+                        <apex:outputText style="font-weight: Normal; font-family: sans-serif; color: black" value="${!quoteLineItem.Generic_Risk_Spread_IC__c}"/>
+                    </td>
+                </tr>
+                <tr>
+                    
+                </tr>
+                <tr>
+                    <td style="text-align: center; font-family: sans-serif; font-weight: bold; color: #203f63">
+                        Brand
+                    </td>
+                    <td style="text-align: center; font-family: sans-serif">
+                        <apex:outputText style="font-weight: Normal; font-family: sans-serif; color: black" value="${!quoteLineItem.Brand_Billable_Guarantee_DF__c}"/>
+                    </td>
+                    <td style="text-align: center; font-family: sans-serif">
+                        <apex:outputText style="font-weight: Normal; font-family: sans-serif; color: black" value="${!quoteLineItem.Brand_Risk_Spread_DF__c}"/>
+                    </td>
+                    <td style="text-align: center; font-family: sans-serif">
+                        <apex:outputText style="font-weight: Normal; font-family: sans-serif; color: black" value="${!quoteLineItem.Brand_Billable_Guarantee_IC__c}"/>
+                    </td>
+                    <td style="text-align: center; font-family: sans-serif">
+                        <apex:outputText style="font-weight: Normal; font-family: sans-serif; color: black" value="${!quoteLineItem.Brand_Risk_Spread_IC__c}"/>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
+    </apex:repeat>
+
+</apex:page>

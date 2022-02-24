@@ -1,0 +1,60 @@
+<template>
+    <template if:true={spinnerLoading}>
+		<div class="slds-spinner-container__wrapper">
+			<vlocity_ins-spinner variant="base"
+				alternative-text="Loading.."
+				size="medium">
+			</vlocity_ins-spinner>
+		</div>
+	</template>
+    <div class="slds-grid slds-grid_align-end slds-grid_vertical-align-center collapse slds-var-m-bottom_small">
+        <div class="slds-p-right_large">
+            <button onclick={handleCollapseAll} class="slds-button vloc-link ng-binding all-button">Collapse all</button>
+            <span class="slds-p-horizontal_small">|</span>
+            <button onclick={handleExpandAll} class="slds-button vloc-link ng-binding all-button">Expand all</button>
+        </div>
+    </div>
+
+    <div class="text-color-black" >
+        <template for:each={data} for:item="product" for:index="index">
+            <section key={product.Id} class="slds-grid slds-grid_align-spread slds-gutters row slds-m-left_medium slds-m-right_medium" >
+                <div class="align-text-left slds-p-around_x-small" >
+                    <span class="table-name">{product.Name}</span>
+                </div> 
+                <div class="slds-col slds-size_3-of-12 text-align-right slds-p-around_x-small" >
+                    <button data-id={index} class="slds-button open-table-button" onclick={handleClickOpenClose}>{product.openCloseButtonLabel}</button>
+                </div>
+                <!-- <div class="row">
+                    <div class="column">
+                        <div class="slds-col slds-size_3-of-12 align-text-left slds-p-around_x-small" >
+                            <span>{product.Name}</span>
+                            <button data-id={index} class="slds-button text-align-right" onclick={handleClickOpenClose}>{product.openCloseButtonLabel}</button>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="slds-col slds-size_3-of-12 text-align-right slds-p-around_x-small" >
+                            <button data-id={index} class="slds-button" onclick={handleClickOpenClose}>{product.openCloseButtonLabel}</button>
+                        </div>
+                    </div>
+                  </div> -->
+            </section>
+            <!-- Expanded area -->
+            <ul key={product.Id} class="slds-accordion slds-col">
+                <li class="slds-accordion__list-item">
+                <section class="slds-accordion__section no-padding slds-m-left_medium slds-m-right_medium product-table" data-id={product.Id}>
+                    <div class="slds-accordion__content accordion-expanded">
+                        <div class="expanded-internal">
+                            <c-product-information-table 
+                                product={product} 
+                                editable={editable} 
+                                change-output={changeOutput}
+                                simulation-output={simulationOutput}>
+                            </c-product-information-table>
+                        </div>
+                    </div>
+                </section>
+                </li>
+            </ul>
+        </template>
+    </div>
+</template>

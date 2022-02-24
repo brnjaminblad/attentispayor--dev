@@ -1,0 +1,877 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 11-12-2021
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+
+
+    <div if:false={plans}>
+        No plans selected.
+    </div>
+    <div if:true={plans}>
+        <!--change view-->
+        <label class="slds-checkbox_toggle slds-grid" style="width: 100%;">
+            <span class="slds-form-element__label slds-m-bottom_none"></span>
+            <input type="checkbox" name="checkbox" id="check-details" aria-describedby="toggle-desc" value="1"
+                aria-invalid="false" onchange={changeView}>
+            <span id="toggle-desc" class="slds-checkbox_faux_container" aria-live="assertive" style="margin: 0px auto;">
+                <span class="slds-checkbox_faux" style="margin: 0px auto;"></span>
+                <span class="slds-checkbox_off toggle-text">Detailed View and Compare Plans</span>
+                <span class="slds-checkbox_on toggle-text">List View</span>
+            </span>
+        </label>
+
+        <!--List view-->
+        <div if:true={viewState}>
+
+            <div>Showing {plansOrdered.length} out of {plans.length} available plans.<br></div><br>
+
+            <template for:each={plansOrdered} for:item="plan" for:index="index">
+                <div key={plan.Id}>
+                    <div class={plan.cardBorder}>
+
+                        <div class="slds-grid slds-grid_vertical-align-start">
+                            <div class="slds-col slds-size_1-of-3 slds-col_bump-left">
+                                <div class="planname">{plan.Name}</div>
+                                <div><br></div>
+
+                                <div class="slds-grid slds-grid_vertical-align-center">
+                                    <div class="slds-col slds-size_1-of-2 slds-col_bump-left">
+                                        <lightning-button data-id={index} class="plandetails" variant="base"
+                                            label="View Plan Details" onclick={openModal}>
+                                        </lightning-button>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2 slds-col_bump-left">
+                                        <a class="greenletters" href={plan.EvidenceofCoverageEnglish}>Evidence of
+                                            Coverage - English</a>
+                                    </div>
+                                    <lightning-icon class="slds-m-left_x-small" icon-name="utility:new_window"
+                                        size="xx-small" style="position: relative; margin: -2%"></lightning-icon>
+                                </div>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-3">
+                                <div class="pricemo">${plan.Price}/mo.</div>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-3 slds-col_bump-right">
+                                <div><br></div>
+                                <div class="verticalLine">
+                                    <div class="verticalLine2">
+                                        <div><br></div>
+                                        <!--buttons-->
+                                        <div class="slds-col slds-size_1-of-1">
+                                            <div><br></div>
+                                            <!--enroll-->
+                                            <div class="slds-grid slds-grid_align-center slds-m-bottom_medium">
+                                                <lightning-button variant="brand" class={plan.btnEnrollDisable}
+                                                    data-id={index} label={plan.btnEnrollLabel} onclick={btnEnroll}>
+                                                </lightning-button>
+                                            </div>
+                                        </div>
+                                        <div><br></div>
+                                        <!--end buttons-->
+                                    </div>
+                                </div>
+                                <div><br></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </template>
+            <br>
+        </div>
+
+        <!--Detailed view-->
+        <div if:false={viewState}>
+
+            <div>Showing {plansOrdered.length} out of {plans.length} available plans.
+
+                <!--compare button-->
+                <div class="slds-grid slds-float_right slds-m-bottom_medium">
+                    <lightning-button onclick={showModalCompare} variant="brand" class="custom-btn compare-modal-btn"
+                        label="Compare Up to 3 Plans" data-id={index} disabled>
+                    </lightning-button><br>
+                </div><br>
+            </div><br>
+            <div><br></div>
+
+            <template for:each={plansOrdered} for:item="plan" for:index="index">
+                <div key={plan.Id}>
+                    <div class={plan.cardBorder}>
+ 
+                        <div class="slds-grid slds-grid_vertical-align-start">
+                            <div class="sectionDetails">
+                                <div class="planname">{plan.Name}</div>
+
+                                <div class="slds-grid slds-grid_vertical-align-start">
+                                    <div class="block1-3">
+                                        <div class="boldletters">Primary Care Physician Visit</div>
+                                        <div style="margin-left: 2%;">{plan.PrimaryCarePhysicianVisit}</div>
+                                    </div>
+                                    <div class="block1-3">
+                                        <div class="boldletters">Specialist Office Visit</div>
+                                        <div style="margin-left: 2%;">{plan.SpecialistOfficeVisit}</div>
+                                    </div>
+                                    <div class="block1-3">
+                                        <div class="boldletters">Medical Deductible</div>
+                                        <div style="margin-left: 2%;">{plan.MedicalDeductible}</div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="slds-grid slds-grid_vertical-align-start">
+                                    <div class="block1-3">
+                                        <div class="boldletters">Prescription Drug Coverage</div>
+                                        <div style="margin-left: 2%;">{plan.PrescriptionDrugCoverage}</div>
+                                    </div>
+                                    <div class="block1-3">
+                                        <div class="boldletters">Dental Coverage</div>
+                                        <div style="margin-left: 2%;">{plan.DentalCoverage}</div>
+                                    </div>
+                                    <div class="block1-3">
+                                        <div class="boldletters">TeleHealth</div>
+                                        <div style="margin-left: 2%;">{plan.TeleHealth}</div>
+                                    </div>
+                                </div>
+
+                                <div><br></div>
+                                <lightning-button data-id={index} class="plandetails" variant="base"
+                                    label="Plan Details" onclick={openModal}>
+                                </lightning-button>
+                                <div><br></div>
+
+                                <div class="slds-grid slds-grid_vertical-align-end">
+                                    <div class="slds-col">
+                                        <a class="detailLinks" href={plan.FindaDoctor}>Find a Doctor</a>
+                                        <lightning-icon class="slds-m-left_x-small" icon-name="utility:new_window"
+                                            size="xx-small" style="position: relative;"></lightning-icon>
+                                    </div>
+                                    <div class="slds-col">
+                                        <a class="detailLinks" href={plan.RxDetails}>Rx Details</a>
+                                        <lightning-icon class="slds-m-left_x-small" icon-name="utility:new_window"
+                                            size="xx-small" style="position: relative;"></lightning-icon>
+                                    </div>
+                                    <div class="slds-col">
+                                        <a class="detailLinks" href={plan.EvidenceofCoverageEnglish}>Evidence of
+                                            Coverage - English</a>
+                                        <lightning-icon class="slds-m-left_x-small" icon-name="utility:new_window"
+                                            size="xx-small" style="position: relative;"></lightning-icon>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="sectionbtn">
+                                <div><br></div>
+                                <div class="verticalLine">
+                                    <div class="verticalLine2">
+                                        <div><br></div>
+                                        <div class="pricemo">${plan.Price}/mo.
+
+                                            <lightning-icon icon-name="utility:info" class="slds-m-bottom_xx-small slds-m-left_x-small custom-info-icon"
+                                                alternative-text="Info" name="info" size="x-small" style="position: absolute;"
+                                                title="This premium is based on the level of Extra Help/Low Income Subsidy you selected previously. Your final monthly premium will be determined once your enrollment is confirmed.">
+                                            </lightning-icon>
+
+                                        </div>
+
+                                        <div><br></div>
+                                        <!--buttons-->
+                                        <!--add to compare-->
+                                        <div class="slds-col slds-size_1-of-1">
+                                            <!--add to compare-->
+                                            <template if:true={plan.checkCompareDisabled}>
+                                              <div class="slds-grid slds-grid_align-center">
+                                                <lightning-input type="checkbox" label={plan.btnCompareLabel} value={chekCompareValue} data-id={index} disabled=""
+                                                  name={plan.Name} onchange={comparecheckbox} style="margin-bottom: 2%;"></lightning-input>
+                                              </div>
+                                            </template>
+                                            <template if:false={plan.checkCompareDisabled}>
+                                              <div class="slds-grid slds-grid_align-center">
+                                                <lightning-input type="checkbox" label={plan.btnCompareLabel} value={chekCompareValue} data-id={index}
+                                                  name={plan.Name} onchange={comparecheckbox} style="margin-bottom: 2%;"></lightning-input>
+                                              </div>
+                                            </template>
+                                            <!--enroll-->
+                                            <div class="slds-grid slds-grid_align-center slds-m-bottom_medium">
+                                                    <lightning-button variant="brand" class={plan.btnEnrollDisable}
+                                                        data-id={index} label={plan.btnEnrollLabel} onclick={btnEnroll}>
+                                                    </lightning-button>
+                                            </div>
+                                        </div>
+                                        <!--end buttons-->
+                                        <div><br></div>
+                                        <div><br></div>
+                                        <div><br></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+
+                    </div>
+                </div>
+            </template>
+            <br>
+        </div>
+
+        <!--next-previos buttons-->
+
+        <div class="slds-col slds-size_1-of-1">
+            <div class="slds-m-around_small">
+                <div class="slds-grid slds-grid_align-center">
+                    <div class="slds-grid slds-grid_align-center slds-wrap slds-button-group-row slds-size_1-of-1 slds-medium-size_8-of-12 slds-p-horizontal_medium">
+                        <div class="omniscript-btn-next slds-size_12-of-12 slds-m-bottom_xx-small slds-medium-size_3-of-12">
+                            <a class="vlocity-btn slds-button slds-button_brand slds-button_stretch slds-p-around_xx-small slds-size_1-of-1" onclick={next}>Next</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-m-around_small">
+                <div class="slds-grid slds-grid_align-center">
+                    <div class="slds-grid slds-grid_align-center slds-wrap slds-button-group-row slds-size_1-of-1 slds-medium-size_8-of-12 slds-p-horizontal_medium">
+                        <div class="omniscript-btn-next slds-size_12-of-12 slds-m-bottom_xx-small slds-medium-size_3-of-12">
+                            <a class="vlocity-btn slds-button slds-button_neutral slds-button_stretch slds-p-around_xx-small slds-size_1-of-1" onclick={previous}>Previous</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!--Disclaimer-->
+    <template if:true={openDisclaimer}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+        aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+
+            <header class="slds-modal__header" style="background-color: rgb(24, 37, 82);">
+            <div class="disclaimer-error-Title">Rating Information</div>
+            </header>
+
+            <div class="slds-modal__content slds-p-around_medium">
+            <div class="slds-grid slds-grid_vertical-align-start">
+                <div class="slds-grid">
+                <lightning-icon icon-name="utility:info" class="slds-m-bottom_xx-large slds-m-left_x-large custom-info"
+                    alternative-text="info" name="info" size="x-large">
+                </lightning-icon>
+                </div>
+                <div class="slds-grid" style="margin-left: 5%;">
+                <p>The estimated costs or premiums shown here are based on the information you provided.
+                    Your actual premium may be different once your enrollment is confirmed.</p>
+                </div>
+            </div>
+            <br>
+            <div class="slds-col slds-size_1-of-1">
+                <div class="slds-grid slds-grid_align-center">
+                <div class="slds-grid slds-grid_align-center slds-wrap slds-button-group-row slds-size_1-of-1 slds-medium-size_8-of-12 slds-p-horizontal_medium">
+                    <div class="omniscript-btn-next slds-size_12-of-12 slds-m-bottom_xx-small slds-medium-size_3-of-12">
+                    <a class="vlocity-btn slds-button slds-button_brand slds-button_stretch slds-p-around_xx-small slds-size_1-of-1" onclick={closeDisclaimer} >OK</a>
+                    </div>          
+                </div>           
+                </div>
+            </div>
+            </div>
+
+        </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <!--Error message(when click "Next" without plan selected)-->
+    <template if:true={errorNext}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+        aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+
+            <header class="slds-modal__header" style="background-color: rgb(199, 22, 22);">
+            <div class="disclaimer-error-Title">Error</div>
+            </header>
+
+            <div class="slds-modal__content slds-p-around_medium">
+            <div class="slds-grid slds-grid_vertical-align-start">
+                <div class="slds-grid">
+                <lightning-icon icon-name="utility:error" class="slds-m-bottom_xx-large slds-m-left_x-large custom-error"
+                    alternative-text="error" name="error" size="x-large">
+                </lightning-icon>
+                </div>
+                <div class="slds-grid" style="margin-left: 5%;">
+                <p>Error: You must select at least one plan to proceed.</p>
+                </div>
+            </div>
+            <br>
+            <div class="slds-col slds-size_1-of-1">
+                <div class="slds-grid slds-grid_align-center">
+                <div class="slds-grid slds-grid_align-center slds-wrap slds-button-group-row slds-size_1-of-1 slds-medium-size_8-of-12 slds-p-horizontal_medium">
+                    <div class="omniscript-btn-next slds-size_12-of-12 slds-m-bottom_xx-small slds-medium-size_3-of-12">
+                        <a class="vlocity-btn slds-button slds-button_destructive slds-button_stretch slds-p-around_xx-small slds-size_1-of-1" onclick={closeErrorNext} >OK</a>
+                    </div>          
+                </div>           
+                </div>
+            </div>
+            </div>
+
+        </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <!--Modal-->
+    <c-plan-modal product={product}> </c-plan-modal>
+
+    <!-- modal compare -->
+    <template if:true={openModalCompare}>
+        <div class="slds-modal slds-fade-in-open slds-backdrop">
+            <div class="slds-modal__container compare-modal-container">
+                <div class="slds-modal__content compare-modal-container">
+
+                    <div class="slds-modal__header" style="position: absolute;  z-index: 1;">
+
+                        <div class="slds-grid slds-grid_align-end">
+                            <lightning-button-icon icon-name="utility:print" class="custom-print" size="large"
+                                variant="container" onclick={btnprint}>
+                            </lightning-button-icon>
+                            <lightning-button-icon icon-name="utility:close" alternative-text="Close this window"
+                                size="large" variant="container" onclick={closeModalCompare} class="close-compare">
+                            </lightning-button-icon>
+                        </div>
+
+                    </div>
+                    <div class="slds-grid slds-grid_align-space">
+                        <div class="slds-col">
+                            <div class="slds-modal__header" style="height: 115px;">
+
+                                <div class="slds-text-title_bold slds-p-top_medium"></div>
+                                <div class="slds-text-title_bold"></div>
+
+                            </div>
+                            <div class="slds-modal__content custom-modal-content">
+                                <div class="modalForm">
+                                    <!--attributes-->
+                                    <ul style="margin-top: -5px;">
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Primary Care Physician Visit</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Specialist Office Visit</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Medical Deductible</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Prescription Drug Coverage</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Dental Coverage</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">TeleHealth</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Find a Doctor</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Rx Details</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Evidence of Coverage - English</div>
+                                        </div>
+                                    </ul>
+                                    <!--Benefits-->
+                                    <div class="modaltxtHeader match-height">Benefits</div>
+
+                                    <ul>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Urgent Care</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">PCP Required</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Referral Required</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">24-Hour Nurse Hotline</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Inpatient Hospital Coverage</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Home Health Care</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Eyewear</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Hearing Aid</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Skilled Nursing Facility (SNF)</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Mental Health Services - Inpatient
+                                                Visit</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Emergency Room</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Chiropractic Care</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Medical Equipment/Supplies</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Ambulance Services</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Podiatry Services (Foot Care)</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Over-The-Counter (OTC) Items</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Acupuncture</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Maximum Out of Pocket</div>
+
+                                        </div>
+                                    </ul>
+                                    <!--Drug Coverage-->
+                                    <div class="modaltxtHeader match-height">Drug Coverage</div>
+
+                                    <ul>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Initial Coverage Limit/Catastrophic
+                                                Limit</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Pharmacy Deductible</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">All Formulary Drugs</div>
+
+                                        </div>
+                                    </ul>
+                                    <!--Preferred Retail (30-day-supply)-->
+                                    <div class="modaltxtHeader match-height">Preferred Retail (30-day-supply)</div>
+
+                                    <ul>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Tier 1 (Preferred Generic)</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Tier 2 (Generic)</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Tier 3 (Preferred Brand)</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Tier 4 (Non-Preferred Drug)</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Tier 5 (Specialty)</div>
+
+                                        </div>
+                                    </ul>
+                                    <!--Standard Retail (30-day-supply)-->
+                                    <div class="modaltxtHeader match-height">Standard Retail (30-day-supply)</div>
+
+                                    <ul>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Tier 1 (Preferred Generic)</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Tier 2 (Generic)</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Tier 3 (Preferred Brand)</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Tier 4 (Non-Preferred Drug)</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Tier 5 (Specialty)</div>
+
+                                        </div>
+                                    </ul>
+                                    <!--Mail Order (30-day-supply)-->
+                                    <div class="modaltxtHeader match-height">Mail Order (30-day-supply)</div>
+
+                                    <ul>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Tier 1 (Preferred Generic)</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Tier 2 (Generic)</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Tier 3 (Preferred Brand)</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Tier 4 (Non-Preferred Drug)</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Tier 5 (Specialty)</div>
+
+                                        </div>
+                                    </ul>
+                                    <!--Mail Order (90-day-supply)-->
+                                    <div class="modaltxtHeader match-height">Mail Order (90-day-supply)</div>
+
+                                    <ul>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Tier 1 (Preferred Generic)</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Tier 2 (Generic)</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Tier 3 (Preferred Brand)</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Tier 4 (Non-Preferred Drug)</div>
+
+                                        </div>
+                                        <div class="modalLine match-height">
+                                            <div class="modalLeftBlock boldletters">Tier 5 (Specialty)</div>
+
+                                        </div>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <template for:each={countArray} for:item="product" for:index="index">
+                            <div key={product.ID} class="slds-col">
+                                <!--modal header-->
+                                <div class="slds-modal__header" style="height: 115px;">
+
+                                    <div class="slds-text-title_bold slds-p-top_medium">{product.Name}</div>
+                                    <div class="slds-text-title_bold">${product.Price}/mo.</div>
+
+                                </div>
+                                <div class="slds-modal__content custom-modal-content">
+                                    <div class="modalForm">
+                                        <!--attributes-->
+                                        <ul>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.PrimaryCarePhysicianVisit}</div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.SpecialistOfficeVisit}</div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.MedicalDeductible}</div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.PrescriptionDrugCoverage}</div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.DentalCoverage}</div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.TeleHealth}</div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">
+                                                    <a class="greenletters" href={product.FindaDoctor}>Find a Doctor</a>
+                                                </div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">
+                                                    <a class="greenletters" href={product.RxDetails}>Rx Details</a>
+                                                </div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">
+                                                    <a class="greenletters"
+                                                        href={product.EvidenceofCoverageEnglish}>Evidence of Coverage -
+                                                        English</a>
+                                                </div>
+                                            </div>
+                                        </ul>
+                                        <!--Benefits-->
+                                        <div class="modaltxtHeader match-height"></div>
+
+                                        <ul>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.UrgentCareMEDICAREBENEFITS}</div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.PCPRequiredMEDICAREBENEFITS}</div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.ReferralRequiredMEDICAREBENEFITS}
+                                                </div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.HourNurseHotlineMEDICAREBENEFITS}
+                                                </div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">
+                                                    {product.InpatientHospitalCoverageMEDICAREBENEFITS}</div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.HomeHealthCareMEDICAREBENEFITS}
+                                                </div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.EyewearMEDICAREBENEFITS}</div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.HearingAidMEDICAREBENEFITS}</div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">
+                                                    {product.SkillednursingfacilitySNFMEDICAREBENEFITS}</div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">
+                                                    {product.MentalHealthServicesInpatientVisitMEDICAREBENEFITS}</div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.EmergencyRoomMEDICAREBENEFITS}
+                                                </div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.ChiropracticCareMEDICAREBENEFITS}
+                                                </div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">
+                                                    {product.MedicalEquipmentSuppliesMEDICAREBENEFITS}</div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.AmbulanceServicesMEDICAREBENEFITS}
+                                                </div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">
+                                                    {product.PodiatryServicesFootCareMEDICAREBENEFITS}</div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">
+                                                    {product.OverTheCounterOTCItemsMEDICAREBENEFITS}</div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.AcupunctureMEDICAREBENEFITS}</div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">
+                                                    {product.MaximumOutofPocketMEDICAREBENEFITS}</div>
+                                            </div>
+                                        </ul>
+                                        <!--Drug Coverage-->
+                                        <div class="modaltxtHeader match-height"></div>
+
+                                        <ul>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">
+                                                    {product.InitialCoverageLimitCatastrophicLimitMEDIDRUGCOV}</div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.PharmacyDeductibleMEDIDRUGCOV}
+                                                </div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.AllFormularyDrugsMEDIDRUGCOV}
+                                                </div>
+                                            </div>
+                                        </ul>
+                                        <!--Preferred Retail (30-day-supply)-->
+                                        <div class="modaltxtHeader match-height"></div>
+
+                                        <ul>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.TierPreferredGenericPRFRRDRTLt}
+                                                </div>
+                                            </div>
+                                            <div class="modalLine match-height">
+                                                <div class="modalRightBlock">{product.TierGenericPRFRRDRTLt}</div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.TierPreferredBrandPRFRRDRTLt}
+                                                </div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.TierNonPreferredDrugPRFRRDRTLt}
+                                                </div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.TierSpecialtyPRFRRDRTLt}</div>
+                                            </div>
+                                        </ul>
+                                        <!--Standard Retail (30-day-supply)-->
+                                        <div class="modaltxtHeader match-height"></div>
+
+                                        <ul>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.TierPreferredGenericSTNDRDRTLt}
+                                                </div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.TierGenericSTNDRDRTLt}</div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.TierPreferredBrandSTNDRDRTLt}
+                                                </div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.TierNonPreferredDrugSTNDRDRTLt}
+                                                </div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.TierSpecialtySTNDRDRTLt}</div>
+                                            </div>
+                                        </ul>
+                                        <!--Mail Order (30-day-supply)-->
+                                        <div class="modaltxtHeader match-height"></div>
+
+                                        <ul>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.TierPreferredGenericMLORDRt}</div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.TierGenericMLORDRt}</div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.TierPreferredBrandMLORDRt}</div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.TierNonPreferredDrugMLORDRt}</div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.TierSpecialtyMLORDRt}</div>
+                                            </div>
+                                        </ul>
+                                        <!--Mail Order (90-day-supply)-->
+                                        <div class="modaltxtHeader match-height"></div>
+
+                                        <ul>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.TierPreferredGenericMLORDRn}</div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.TierGenericMLORDRn}</div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.TierPreferredBrandMLORDRn}</div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.TierNonPreferredDrugMLORDRn}</div>
+                                            </div>
+                                            <div class="modalLine match-height">
+
+                                                <div class="modalRightBlock">{product.TierSpecialtyMLORDRn}</div>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- end comapre modal -->
+            </div>
+        </div>
+
+    </template>
+
+</template>

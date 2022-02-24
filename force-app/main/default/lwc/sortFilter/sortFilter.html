@@ -1,0 +1,98 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 11-05-2021
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+    <div class="slds-box slds-m-bottom_medium">
+      <!--  <h1 class="slds-text-heading_medium slds-text-align_center slds-m-bottom_medium">Quoted Plans</h1>-->
+        <div class="slds-grid slds-gutters">
+            <div class="slds-form-element slds-col">
+
+                <h2 class="slds-text-heading_medium slds-m-bottom_small"><b>Sort</b></h2>
+                <!-- </label> -->
+                <div class="slds-form-element__control">
+                    <div class="slds-select_container">
+                        <select class="slds-select form-item select1" id="select-01" onchange={changeHandler}
+                            name="sortSelectedOption" style="margin-top: 24px;">
+                            <option value=""></option>
+                            <option value="low-to-high">Premium low to high</option>
+                            <option value="high-to-low">Premium high to low</option>
+                            <option value="name">Name (A - Z)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-col">
+                <fieldset class="slds-form-element slds-m-bottom_medium">
+                    <h2 class="slds-text-heading_medium slds-m-bottom_small"><b>Filter</b></h2>
+                    <legend class="slds-form-element__legend slds-form-element__label">Plan Type</legend>
+                    <!-- </label> -->
+                    <div class="slds-form-element__control">
+                        <div class="slds-select_container">
+                            <select class="slds-select form-item select2" id="select-02" onchange={changeHandler}
+                                name="optionSelectFilter">
+                                <option value=""></option>
+                                <option value="optionMedicalPrescript">Medical and Prescription</option>
+                                <option value="optionSpecNeeds">Special Needs Plans</option>
+                            </select>
+                        </div>
+                    </div>
+                </fieldset>
+                <!-- <h2 class="slds-text-heading_medium slds-m-bottom_small"><b>Filter</b></h2>
+                  <legend class="slds-form-element__legend slds-form-element__label">Plan Type</legend>
+                  <div class="slds-form-element__control">
+                      <div class="slds-checkbox">
+                          <input type="checkbox"  name="optionMedicalPrescript" id="medical-prescription"
+                              value={checkboxmedicalmrescription} onclick={changeHandler} class="form-item"/>
+                          <label class="slds-checkbox__label" for="medical-prescription">
+                              <span class="slds-checkbox_faux"></span>
+                              <span class="slds-form-element__label">Medical and Prescription</span>
+                          </label>
+                      </div>
+                      <div class="slds-checkbox">
+                          <input type="checkbox" name="optionSpecNeeds" id="spec-needs" value={checkboxspecneeds} onclick={changeHandler} class="form-item"/>
+                          <label class="slds-checkbox__label" for="spec-needs">
+                              <span class="slds-checkbox_faux"></span>
+                              <span class="slds-form-element__label">Special Needs Plans</span>
+                          </label>
+                      </div>
+                  </div> -->
+
+
+
+
+                <fieldset class="slds-form-element">
+                    <legend class="slds-form-element__legend slds-form-element__label">PCP Required</legend>
+                    <div class="slds-form-element__control">
+                        <div class="slds-radio_button-group">
+                            <span class="slds-button slds-radio_button">
+                                <input type="radio" name="pcpRequired" id="example-unique-id-94" value={pcprequiredyes} checked={checkshowbooly}
+                                    onclick={changeHandler} class="form-item" />
+                                <label class="slds-radio_button__label" for="example-unique-id-94">
+                                    <span class="slds-radio_faux">Yes</span>
+                                </label>
+                            </span>
+                            <span class="slds-button slds-radio_button">
+                                <input type="radio" name="pcpRequired" id="example-unique-id-95" value={pcprequiredno} checked={checkshowbooln}
+                                    onclick={changeHandler} class="form-item" />
+                                <label class="slds-radio_button__label" for="example-unique-id-95">
+                                    <span class="slds-radio_faux">No</span>
+                                </label>
+                            </span>
+                        </div>
+                    </div>
+                </fieldset>
+
+            </div>
+            <div class="slds-col slds-grid slds-grid_vertical-align-center slds-grid_align-center">
+                <button class="slds-button slds-button_neutral custom-btn btn-navy" type="reset"
+                    onclick={resetHandler}>Reset</button>
+            </div>
+
+        </div>
+    </div>
+</template>

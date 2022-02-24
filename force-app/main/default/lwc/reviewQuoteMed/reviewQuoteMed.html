@@ -1,0 +1,73 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 10-11-2021
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+
+    <div class="planName">{PlanName}Plan Name</div>
+    <div><br></div>
+    <div class="space">
+    <div class="line"></div>
+    </div>
+    <div><br></div>
+    <div class="pricemo">${Price}/mo.</div>
+    <div><br></div>
+
+    <lightning-button variant="base" label="View Plan Details" onclick={showModal} class="slds-m-left_x-small"></lightning-button>
+    <!--Moodal--> 
+    <template if:true={openModal}>  
+      <div class="slds-modal slds-fade-in-open slds-backdrop">  
+        <div class="slds-modal__container">  
+          <!--modal header-->  
+          <div class="nds-modal__header">  
+            <lightning-button-icon icon-name="utility:close" alternative-text="Close this window" size="large"  
+              variant="bare-inverse" onclick={closeModal} class="slds-modal__close">  
+            </lightning-button-icon>
+            <!--<div class="modalHeader">-->
+              <div class="modalLeftBlock">
+              <div class="modalViewDetails">View Details</div></div>
+              <div class="modalRightBlock"><br>
+                 <!--{Plan.Name}-->
+                 Plan Name<br>
+                 <!--{Plan.Price}-->
+                 Price
+              </div>
+           <!-- </div>-->  
+          </div>
+          <!--modal body-->  
+          <div class="slds-modal__content slds-p-around_medium">  
+            <div class="modalForm">
+              <div class="modalForm">
+                  <div class="modalLeftBlock">
+                      <ul>
+                          <template for:each={attlist} for:item="chi" >
+                              <li key={chi.Id}>
+                                  <br>
+                                  {chi.Name}   
+                                  <div class="modalLine"></div>
+                              </li>
+                          </template>
+                      </ul>
+                  </div>
+                  <div class="modalRightBlock">
+                      <ul>
+                          <template for:each={attlist} for:item="chi" >
+                              <li key={chi.Id}>
+                                  <br>
+                                  {chi.Value}
+                                  <div class="modalLine"></div>
+                              </li>
+                          </template>
+                      </ul>
+                  </div>
+              </div>      
+            </div>
+          </div>  
+        </div>  
+      </div>  
+    </template>
+
+</template>

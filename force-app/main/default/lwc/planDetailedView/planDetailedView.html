@@ -1,0 +1,566 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 11-03-2021
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+
+  <c-sort-filter onsortplan={changeHandler} onresetplan={resetHandler} pcprequiredyes={pcprqrdy}
+    pcprequiredno={pcprqrdn} checkshowbooly={showBoolY} checkshowbooln={showBoolN} resetselect={resetSelect}>
+  </c-sort-filter>
+
+
+
+
+  <div class="slds-form-element">
+    <label class="slds-checkbox_toggle">
+      <input type="checkbox" name="checkboxView" aria-describedby="checkbox-toggle-16" onchange={changeView} />
+      <span id="checkbox-toggle-16" class="slds-checkbox_faux_container" aria-live="assertive">
+        <span class="slds-checkbox_faux"></span>
+        <span class="slds-checkbox_on">Show Details and Compare Plans</span>
+        <span class="slds-checkbox_off">List View</span>
+      </span>
+    </label>
+  </div>
+
+
+  <!--List view-->
+  <div if:true={viewState}>
+
+    <div>Showing {plansOrdered.length} out of {plans.length} available plans.<br></div><br>
+
+    <template for:each={plansOrdered} for:item="plan" for:index="index">
+      <div key={plan.Id}>
+        <div class={plan.cardBorder}>
+
+          <div class="slds-grid slds-grid_vertical-align-start">
+            <div class="slds-col">
+              <div class="planname">{plan.Name}</div>
+              <div><br></div>
+
+              <div class="block1-3">
+                <lightning-button data-id={index} class="plandetails" variant="base" label="View Plan Details"
+                  onclick={showModal}>
+                </lightning-button>
+              </div>
+              <a class="greenletters" href={plan.EvidenceofCoverageEnglish}>Evidence of Coverage - English</a>
+
+              <div><br></div>
+              <div><br></div>
+            </div>
+
+            <div class="slds-col">
+              <div class="pricemo">${plan.Price}/mo.</div>
+            </div>
+
+            <div class="slds-col">
+              <div><br></div>
+              <div class="verticalLine">
+                <div class="verticalLine2">
+                  <div><br></div>
+                  <!--buttons-->
+                  <div class="slds-col slds-size_1-of-1">
+                    <div><br></div>
+                    <!--quote-->
+                    <div class="slds-grid slds-grid_align-center slds-m-bottom_medium">
+                      <lightning-button variant="brand" class="custom-btn" data-id={index} label="Select for Quote"
+                        onclick={btnQuote}
+                        title="When selected, this plan will be included in a Quote that you can see on the next screen.">
+                      </lightning-button>
+                    </div>
+                    <!--enroll-->
+                    <div class="slds-grid slds-grid_align-center slds-m-bottom_medium">
+                      <lightning-button variant="brand" class={plan.btnEnrollDisable} data-id={index}
+                        label={plan.btnEnrollLabel} onclick={btnEnroll}></lightning-button>
+                    </div>
+                  </div>
+                  <div><br></div>
+                  <!--end buttons-->
+                </div>
+              </div>
+              <div><br></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </template>
+    <br>
+    <div>Showing {plansOrdered.length} out of {plans.length} available plans.</div>
+  </div>
+
+  <!--Detailed view-->
+  <div if:false={viewState}>
+
+    <div>Showing {plansOrdered.length} out of {plans.length} available plans.
+
+      <!--compare-->
+      <div class="slds-grid slds-float_right slds-m-bottom_medium">
+        <lightning-button onclick={showModalCompare} variant="brand" class="custom-btn compare-modal-btn" label="Compare Up to 3 Plans" data-id={index}>
+        </lightning-button><br>
+      </div><br>
+    </div><br>
+    <div><br></div>
+
+    <template for:each={plansOrdered} for:item="plan" for:index="index">
+      <div key={plan.Id}>
+        <div class={plan.cardBorder}>
+
+          <div class="sectionDetails">
+            <div class="planname">&nbsp;{plan.Name}</div>
+
+            <div>
+              <div class="block1-3">
+                <div class="boldletters">
+                  <div>&nbsp;Primary Care Physician Visit</div>
+                </div>
+                <div>&nbsp;{plan.PrimaryCarePhysicianVisit}</div>
+              </div>
+              <div class="block1-3">
+                <div class="boldletters">
+                  <div>Specialist Office Visit</div>
+                </div>
+                <div>{plan.SpecialistOfficeVisit}</div>
+              </div>
+              <div class="block1-3">
+                <div class="boldletters">
+                  <div>Medical Deductible</div>
+                </div>
+                <div>{plan.MedicalDeductible}</div>
+              </div>
+            </div>
+            <br>
+            <div>
+              <div class="block1-3">
+                <div class="boldletters">
+                  <div>&nbsp;Prescription Drug Coverage</div>
+                </div>
+                <div>&nbsp;{plan.PrescriptionDrugCoverage}</div>
+              </div>
+              <div class="block1-3">
+                <div class="boldletters">
+                  <div>Dental Coverage</div>
+                </div>
+                <div>{plan.DentalCoverage}</div>
+              </div>
+              <div class="block1-3">
+                <div class="boldletters">
+                  <div>TeleHealt</div>
+                </div>
+                <div>{plan.TeleHealth}</div>
+              </div>
+            </div>
+
+            <lightning-button data-id={index} class="plandetails" variant="base" label="Plan Details"
+              onclick={showModal}>
+            </lightning-button>
+            <div><br></div>
+
+            <div class="block1-3">
+              <a class="detailLinks" href={plan.FindaDoctor}>Find a Doctor</a>
+            </div>
+            <div class="block1-3">
+              <a class="detailLinks" href={plan.RxDetails}>Rx Details</a>
+            </div>
+            <div class="block1-3">
+              <a class="detailLinks" href={plan.EvidenceofCoverageEnglish}>Evidence of Coverage - English</a>
+            </div>
+          </div>
+
+          <div class="sectionbtn">
+            <div class="verticalLine">
+              <div class="verticalLine2">
+                <div class="pricemo">${plan.Price}/mo.
+
+                <lightning-icon icon-name="utility:info" class="slds-m-bottom_xx-small slds-m-left_x-small custom-info-icon"
+                  alternative-text="Info" name="info" size="x-small" style="position: absolute;"
+                  title="This premium is based on the level of Extra Help/Low Income Subsidy you selected on the previous screen. Your final monthly premium will be determined once your enrollment is confirmed. To make a change to your subsidy amount, click the Previous button on the bottom of this page.">
+                </lightning-icon>
+
+              </div>
+
+                <div><br></div>
+                <!--buttons-->
+                <!--add to compare-->
+                <div class="slds-col slds-size_1-of-1">
+                  <div class="slds-grid slds-grid_align-center slds-m-bottom_medium">
+                    <lightning-button variant="brand" class={plan.btnCompareDisable} data-id={index}
+                      label={plan.btnCompareLabel} onclick={btnCompare}></lightning-button>
+                  </div>
+                  <!--quote-->
+                  <div class="slds-grid slds-grid_align-center slds-m-bottom_medium">
+                    <lightning-button variant="brand" class="custom-btn" data-id={index} label="Select for Quote"
+                      onclick={btnQuote}
+                      title="When selected, this plan will be included in a Quote that you can see on the next screen.">
+                    </lightning-button>
+                  </div>
+                  <!--enroll-->
+                  <div class="slds-grid slds-grid_align-center slds-m-bottom_medium">
+                    <lightning-button variant="brand" class={plan.btnEnrollDisable} data-id={index}
+                      label={plan.btnEnrollLabel} onclick={btnEnroll}></lightning-button>
+                  </div>
+                </div>
+                <!--end buttons-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+    <br>
+    <div>Showing {plansOrdered.length} out of {plans.length} available plans.</div>
+  </div>
+
+
+  <div class="slds-col slds-size_1-of-1">
+    <div class="slds-grid slds-grid_align-center slds-m-bottom_medium">
+      <lightning-button variant="brand" class="custom-btn" label="Next" onclick={next}>
+      </lightning-button>
+    </div>
+
+    <div class="slds-grid slds-grid_align-center slds-m-bottom_medium">
+      <lightning-button variant="brand" class="custom-previous" label="Previous" onclick={previous}>
+      </lightning-button>
+    </div>
+  </div>
+
+  <!--Disclaimer-->
+  <template if:true={openDisclaimer}>
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+      aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+      <div class="slds-modal__container">
+
+        <header class="slds-modal__header">
+          <div class="disclaimer-error-Title">Rating Information</div>
+        </header>
+
+        <div class="slds-modal__content slds-p-around_medium">
+          <lightning-button-icon icon-name="utility:info" class="slds-m-right_xx-large" variant="container"
+            alternative-text="Info" name="info" size="large">
+          </lightning-button-icon>
+          <p>The estimated costs or premiums shown here are based on the information you provided.
+            Your actual premium may be different once your enrollment is confirmed.</p>
+          <br>
+
+          <div class="slds-col slds-size_1-of-1">
+            <div class="slds-grid slds-grid_align-center slds-m-bottom_medium">
+              <lightning-button variant="brand" class="custom-btn" label="OK" onclick={closeDisclaimer}>
+              </lightning-button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+  </template>
+
+  <!--Error message(when click "Next" without plan selected)-->
+  <template if:true={errorNext}>
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+      aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+      <div class="slds-modal__container">
+
+        <header class="slds-modal__header">
+          <div class="disclaimer-error-Title">Error</div>
+        </header>
+
+        <div class="slds-modal__content slds-p-around_medium">
+          <lightning-button-icon icon-name="utility:error" class="slds-m-right_xx-large" variant="container"
+            alternative-text="Error" name="error" size="large">
+          </lightning-button-icon>
+          <p>Error: You must select at least one plan to proceed.</p>
+          <br>
+
+          <div class="slds-col slds-size_1-of-1">
+            <div class="slds-grid slds-grid_align-center slds-m-bottom_medium">
+              <lightning-button variant="brand" class="custom-btn" label="OK" onclick={closeErrorNext}>
+              </lightning-button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+  </template>
+
+  <!--Modal-->
+  <template if:true={openModal}>
+    <div class="slds-modal slds-fade-in-open slds-backdrop">
+      <div class="slds-modal__container">
+        <!--modal header-->
+
+        <div class="slds-modal__header">
+          <lightning-button-icon icon-name="utility:close" alternative-text="Close this window" size="large"
+            variant="bare-inverse" onclick={closeModal} class="slds-modal__close">
+          </lightning-button-icon>
+
+          <div class="modalLLeftBlock"></div>
+          <div class="modalRRightBlock">
+            <!--<div class="slds-p-around_medium lgc-bg">-->
+            <lightning-button-icon icon-name="utility:print" class="slds-m-right_xx-small" variant="container"
+              alternative-text="Print" name="print" size="large" click="btnprint">
+            </lightning-button-icon>
+
+          </div>
+          <div class="modalLeftBlock">
+            <div class="greenletters">View Details</div>
+          </div>
+          <div class="modalRightBlock"><br>
+            {product.Name}<br>
+            <div class="pricemo">${product.Price}/mo</div>
+          </div>
+        </div>
+        <!--modal body-->
+        <div class="slds-modal__content slds-p-around_medium">
+          <div class="modalForm">
+            <!--attributes-->
+            <ul>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Primary Care Physician Visit</div>
+                <div class="modalRightBlock">{product.PrimaryCarePhysicianVisit}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Specialist Office Visit</div>
+                <div class="modalRightBlock">{product.SpecialistOfficeVisit}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Medical Deductible</div>
+                <div class="modalRightBlock">{product.MedicalDeductible}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Prescription Drug Coverage</div>
+                <div class="modalRightBlock">{product.PrescriptionDrugCoverage}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Dental Coverage</div>
+                <div class="modalRightBlock">{product.DentalCoverage}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">TeleHealth</div>
+                <div class="modalRightBlock">{product.TeleHealth}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Find a Doctor</div>
+                <div class="modalRightBlock">
+                  <a class="greenletters" href={product.FindaDoctor}>Find a Doctor</a>
+                </div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Rx Details</div>
+                <div class="modalRightBlock">
+                  <a class="greenletters" href={product.RxDetails}>Rx Details</a>
+                </div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Evidence of Coverage - English</div>
+                <div class="modalRightBlock">
+                  <a class="greenletters" href={product.EvidenceofCoverageEnglish}>Evidence of Coverage - English</a>
+                </div>
+              </div>
+            </ul>
+            <!--Benefits-->
+            <div class="modaltxtHeader">Benefits</div><br>
+            <div class="modalLine"></div>
+            <ul>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Urgent Care</div>
+                <div class="modalRightBlock">{product.UrgentCareMEDICAREBENEFITS}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">PCP Required</div>
+                <div class="modalRightBlock">{product.PCPRequiredMEDICAREBENEFITS}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Referral Required</div>
+                <div class="modalRightBlock">{product.ReferralRequiredMEDICAREBENEFITS}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">24-Hour Nurse Hotline</div>
+                <div class="modalRightBlock">{product.HourNurseHotlineMEDICAREBENEFITS}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Inpatient Hospital Coverage</div>
+                <div class="modalRightBlock">{product.InpatientHospitalCoverageMEDICAREBENEFITS}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Home Health Care</div>
+                <div class="modalRightBlock">{product.HomeHealthCareMEDICAREBENEFITS}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Eyewear</div>
+                <div class="modalRightBlock">{product.EyewearMEDICAREBENEFITS}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Hearing Aid</div>
+                <div class="modalRightBlock">{product.HearingAidMEDICAREBENEFITS}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Skilled Nursing Facility (SNF)</div>
+                <div class="modalRightBlock">{product.SkillednursingfacilitySNFMEDICAREBENEFITS}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Mental Health Services - Inpatient Visit</div>
+                <div class="modalRightBlock">{product.MentalHealthServicesInpatientVisitMEDICAREBENEFITS}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Emergency Room</div>
+                <div class="modalRightBlock">{product.EmergencyRoomMEDICAREBENEFITS}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Chiropractic Care</div>
+                <div class="modalRightBlock">{product.ChiropracticCareMEDICAREBENEFITS}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Medical Equipment/Supplies</div>
+                <div class="modalRightBlock">{product.MedicalEquipmentSuppliesMEDICAREBENEFITS}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Ambulance Services</div>
+                <div class="modalRightBlock">{product.AmbulanceServicesMEDICAREBENEFITS}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Podiatry Services (Foot Care)</div>
+                <div class="modalRightBlock">{product.PodiatryServicesFootCareMEDICAREBENEFITS}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Over-The-Counter (OTC) Items</div>
+                <div class="modalRightBlock">{product.OverTheCounterOTCItemsMEDICAREBENEFITS}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Acupuncture</div>
+                <div class="modalRightBlock">{product.AcupunctureMEDICAREBENEFITS}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Maximum Out of Pocket</div>
+                <div class="modalRightBlock">{product.MaximumOutofPocketMEDICAREBENEFITS}</div>
+              </div>
+            </ul>
+            <!--Drug Coverage-->
+            <div class="modaltxtHeader">Drug Coverage</div><br>
+            <div class="modalLine"></div>
+            <ul>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Initial Coverage Limit/Catastrophic Limit</div>
+                <div class="modalRightBlock">{product.InitialCoverageLimitCatastrophicLimitMEDIDRUGCOV}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Pharmacy Deductible</div>
+                <div class="modalRightBlock">{product.PharmacyDeductibleMEDIDRUGCOV}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">All Formulary Drugs</div>
+                <div class="modalRightBlock">{product.AllFormularyDrugsMEDIDRUGCOV}</div>
+              </div>
+            </ul>
+            <!--Preferred Retail (30-day-supply)-->
+            <div class="modaltxtHeader">Preferred Retail (30-day-supply)</div><br>
+            <div class="modalLine"></div>
+            <ul>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Tier 1 (Preferred Generic)</div>
+                <div class="modalRightBlock">{product.TierPreferredGenericPRFRRDRTLt}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Tier 2 (Generic)</div>
+                <div class="modalRightBlock">{product.TierGenericPRFRRDRTLt}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Tier 3 (Preferred Brand)</div>
+                <div class="modalRightBlock">{product.TierPreferredBrandPRFRRDRTLt}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Tier 4 (Non-Preferred Drug)</div>
+                <div class="modalRightBlock">{product.TierNonPreferredDrugPRFRRDRTLt}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Tier 5 (Specialty)</div>
+                <div class="modalRightBlock">{product.TierSpecialtyPRFRRDRTLt}</div>
+              </div>
+            </ul>
+            <!--Standard Retail (30-day-supply)-->
+            <div class="modaltxtHeader">Standard Retail (30-day-supply)</div><br>
+            <div class="modalLine"></div>
+            <ul>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Tier 1 (Preferred Generic)</div>
+                <div class="modalRightBlock">{product.TierPreferredGenericSTNDRDRTLt}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Tier 2 (Generic)</div>
+                <div class="modalRightBlock">{product.TierGenericSTNDRDRTLt}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Tier 3 (Preferred Brand)</div>
+                <div class="modalRightBlock">{product.TierPreferredBrandSTNDRDRTLt}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Tier 4 (Non-Preferred Drug)</div>
+                <div class="modalRightBlock">{product.TierNonPreferredDrugSTNDRDRTLt}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Tier 5 (Specialty)</div>
+                <div class="modalRightBlock">{product.TierSpecialtySTNDRDRTLt}</div>
+              </div>
+            </ul>
+            <!--Mail Order (30-day-supply)-->
+            <div class="modaltxtHeader">Mail Order (30-day-supply)</div><br>
+            <div class="modalLine"></div>
+            <ul>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Tier 1 (Preferred Generic)</div>
+                <div class="modalRightBlock">{product.TierPreferredGenericMLORDRt}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Tier 2 (Generic)</div>
+                <div class="modalRightBlock">{product.TierGenericMLORDRt}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Tier 3 (Preferred Brand)</div>
+                <div class="modalRightBlock">{product.TierPreferredBrandMLORDRt}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Tier 4 (Non-Preferred Drug)</div>
+                <div class="modalRightBlock">{product.TierNonPreferredDrugMLORDRt}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Tier 5 (Specialty)</div>
+                <div class="modalRightBlock">{product.TierSpecialtyMLORDRt}</div>
+              </div>
+            </ul>
+            <!--Mail Order (90-day-supply)-->
+            <div class="modaltxtHeader">Mail Order (90-day-supply)</div><br>
+            <div class="modalLine"></div>
+            <ul>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Tier 1 (Preferred Generic)</div>
+                <div class="modalRightBlock">{product.TierPreferredGenericMLORDRn}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Tier 2 (Generic)</div>
+                <div class="modalRightBlock">{product.TierGenericMLORDRn}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Tier 3 (Preferred Brand)</div>
+                <div class="modalRightBlock">{product.TierPreferredBrandMLORDRn}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Tier 4 (Non-Preferred Drug)</div>
+                <div class="modalRightBlock">{product.TierNonPreferredDrugMLORDRn}</div>
+              </div>
+              <div class="modalLine">
+                <div class="modalLeftBlock">Tier 5 (Specialty)</div>
+                <div class="modalRightBlock">{product.TierSpecialtyMLORDRn}</div>
+              </div>
+            </ul>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+</template>

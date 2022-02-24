@@ -1,0 +1,36 @@
+<template>
+    <template if:true={showModal}>
+
+      <div class="slds-modal slds-fade-in-open slds-backdrop">
+        <div class="slds-modal__container">
+          <!--modal header-->
+  
+          <div class="slds-modal__header">
+            <div class="slds-grid slds-grid_vertical-align-start">
+              <div class="slds-col">
+              </div>
+              <div class="slds-col_bump-right">
+                <lightning-button-icon icon-name="utility:close" alternative-text="Close this window" 
+                  variant="container" onclick={closeModal}>
+                </lightning-button-icon>
+  
+              </div>
+            </div>
+
+            <div class="slds-grid slds-grid_vertical-align-start">
+              <div class="slds-col slds-grid_vertical-align-center">
+              </div>
+              <div class="modalRightBlock">
+                
+                {account.Name}<br>
+                <!-- <div class="pricemo">${product.Price}/mo</div> -->
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </template>
+
+      
+</template>

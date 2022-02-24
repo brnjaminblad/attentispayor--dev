@@ -1,0 +1,37 @@
+.container {
+    color: #31393f;
+    background-color: #fff;
+    padding: 25px;
+    box-shadow: 0 2px 3px 0 rgb(173 191 204 / 33%);
+    border-collapse: separate;
+    border-radius: 6px;
+    border: 1px solid #d3e0e8;
+}
+
+.slds-select_container:before {
+    display: none!important;
+}
+
+.slds-select {
+    border-color: var(--sds-c-input-color-border, transparent);
+    border-bottom-color: var(--sds-c-input-color-border, #dddbda);
+}
+
+/* reset button */
+
+.btn-navy, .slds-popover_error .slds-popover__footer .slds-button.slds-button_neutral.custom-btn {
+    border-color: #343741;
+    color: #343741;
+    border-radius: 30px;
+}
+.btn-navy:hover, .btn-navy:focus, .slds-popover_error .slds-popover__footer .slds-button.slds-button_neutral.custom-btn:hover, .slds-popover_error .slds-popover__footer .slds-button.slds-button_neutral.custom-btn:focus {
+    border-radius: 30px;
+    border-color: #343741;
+    background-color: #343741;
+    color: #fff;
+}
+.slds-radio_button [type=radio]:checked+.slds-radio_button__label {
+    cursor: pointer;
+    color: #fff!important;
+    background-color: #0973C5;
+}

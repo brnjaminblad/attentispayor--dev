@@ -1,0 +1,28 @@
+<template>
+    <div if:false={isLoaded}>
+        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+    </div>
+    <div if:true={dataError} class="slds-has-error slds-m-top_none nds-has-error nds-m-top_none">
+        <div class="slds-form-element__help nds-form-element__help">No input provided</div>
+    </div><vlocity_ins-ins-os-coverage-list if:true={product} product={product} root-channel={rootChannel} product-instance="single" theme={theme}></vlocity_ins-ins-os-coverage-list>
+    <div if:true={product} class="vlocity_ins-ins-os-amount-container slds-size_1-of-1 slds-p-horizontal_medium slds-text-heading_medium slds-text-align_center nds-size_1-of-1 nds-p-horizontal_medium nds-text-heading_medium nds-text-align_center">
+        <div if:true={product.totalTaxFeeAmount} class="vlocity_ins-ins-coverages-amount-container">
+            Premium
+            <span class="slds-m-left_large nds-m-left_large">
+                <lightning-formatted-number value={product.Price} format-style="currency" currency-code={currency} minimum-fraction-digits="2" maximum-fraction-digits="2"></lightning-formatted-number>
+            </span>
+        </div>
+        <div if:true={product.totalTaxFeeAmount} class="vlocity_ins-ins-coverages-amount-container">
+            Tax &amp; Fee
+            <span class="slds-m-left_large nds-m-left_large">
+                <lightning-formatted-number value={product.totalTaxFeeAmount} format-style="currency" currency-code={currency} minimum-fraction-digits="2" maximum-fraction-digits="2"></lightning-formatted-number>
+            </span>
+        </div>
+        <div class="vlocity_ins-ins-coverages-amount-container">
+            Total
+            <span class="vlocity_ins-ins-coverages-total slds-m-left_large nds-m-left_large">
+                <lightning-formatted-number value={totalPrice} format-style="currency" currency-code={currency} minimum-fraction-digits="2" maximum-fraction-digits="2"></lightning-formatted-number>
+            </span>
+        </div>
+    </div>
+</template>

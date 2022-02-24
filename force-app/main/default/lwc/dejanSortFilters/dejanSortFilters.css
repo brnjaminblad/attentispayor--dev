@@ -1,0 +1,22 @@
+.slds-select_container:before {
+    display: none!important;
+}
+
+.slds-select {
+    border-color: var(--sds-c-input-color-border, transparent);
+    border-bottom-color: var(--sds-c-input-color-border, #dddbda);
+}
+
+/* reset button */
+
+.btn-navy, .slds-popover_error .slds-popover__footer .slds-button.slds-button_neutral.custom-btn {
+    border-color: #343741;
+    color: #343741;
+    border-radius: 30px;
+}
+.btn-navy:hover, .btn-navy:focus, .slds-popover_error .slds-popover__footer .slds-button.slds-button_neutral.custom-btn:hover, .slds-popover_error .slds-popover__footer .slds-button.slds-button_neutral.custom-btn:focus {
+    border-radius: 30px;
+    border-color: #343741;
+    background-color: #343741;
+    color: #fff;
+}

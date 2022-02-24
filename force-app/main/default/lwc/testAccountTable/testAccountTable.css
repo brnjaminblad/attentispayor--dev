@@ -1,0 +1,67 @@
+.label-header {
+    text-align: center;
+    /* background: #224d99!important;
+    color: white; */
+    background-color: white;
+    color: #224d99 !important;
+    font-size: 16px;
+    padding: 10px;
+    font-weight: bold;
+    white-space: normal;
+    word-break: break-word;
+    border-top: none;
+}
+
+.label-td {
+    background-color: white;
+    color: #224d99 !important;
+    font-weight: bold;
+}
+
+table {
+  table-layout: fixed ;
+  width: 100% ;
+  min-width: 600px;
+  border: none !important;
+}
+
+td {
+    width: 25%;
+    padding: 5px;
+}
+
+.input-td {
+    /*margin-top: -20px;*/
+}
+
+th {
+    font-weight: bold !important;
+    text-align: center !important;
+}
+
+.table-row {
+    line-height: 30px;
+}
+
+.td-input {
+    /* padding-bottom: 25px; */
+}
+
+.row-subtitle {
+    /*font-size: 16px;*/
+    font-weight: bold;
+    padding: 2px;
+    font-size: 12px;
+}
+
+.red {
+    color: red !important;
+}
+
+.slds-input {
+    padding-right: 0px !important;
+}
+
+.input-td  > .slds-form-element__control.slds-grow > input {
+    padding-right: 0px !important;
+}

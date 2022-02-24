@@ -1,0 +1,30 @@
+<template>
+    <lightning-card>
+        <lightning-button variant="brand-outline" label={websiteLabel} title="Looks like a link" onclick={gotowebsite} class="slds-p-bottom_small slds-align_absolute-center slds-m-left_x-small"></lightning-button>
+        <lightning-button variant="brand-outline" label={surveyLabel} title="Looks like a link" onclick={gotosurveys} class="slds-p-bottom_small slds-align_absolute-center slds-m-left_x-small"></lightning-button>
+    </lightning-card>
+    <div if:true={showWebsite}>
+        <iframe src="https://heysalesforce.org/" frameborder="0" height="1200px" width="100%" 
+        style="overflow:hidden" ></iframe>
+    </div>
+    <div if:true={showSurvey}>
+        <!--<iframe src="https://www.surveymonkey.com/r/32NRHD9" frameborder="0" height="900px" width="100%" 
+         ></iframe>-->
+
+        <iframe src="https://healthsherpa-nl-sfdc-de-m47wfh.herokuapp.com/sso/tests/shop_managed_app?carrier_id=sfdc&confirmation_id=290861596813&return_url=https://www.salesforce.com&people%5bprimary%5d%5bage%5d=41&people%5bprimary%5d%5bgender%5d=female&people%5bprimary%5d%5btobacco%5d=false&household_size=1&household_income=25000" frameborder="0" height="900px" width="100%">
+
+        </iframe>
+        <!--
+            https://help.salesforce.com/s/articleView?id=sf.networks_clickjack_protection.htm&type=5
+        -->
+        
+        <!--<iframe src="https://full-attentisindustriesdemo.cs167.force.com/accc/s" frameborder="0" height="900px" width="100%">
+
+        </iframe>-->
+
+    </div>
+    <div if:true={isLoading}>
+        <lightning-spinner variant="brand" alternative-text="Loading" size="medium"></lightning-spinner>
+    </div>
+
+</template>

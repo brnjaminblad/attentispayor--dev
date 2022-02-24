@@ -1,0 +1,32 @@
+<template>
+    <div class="slds-form-element slds-gutters slds-m-horizontal_medium">
+        <label class="slds-form-element__label" for="select-01">
+            <abbr class="slds-required" title="required">* </abbr>Select Label</label>
+        <div class="slds-form-element__control">
+            <div class="slds-select_container">
+                <select class="slds-select" id="select-01" required onchange={handleChange}>
+                    <option>I do not qualify for Extra Help</option>
+                    <option>I am enrolled in my state’s Medicaid program</option>
+                    <option>I belong to a Medicare Savings Program (MSP)</option>
+                    <option value="recieve">I receive full or partial help</option>
+                    <option value="idk">I don’t know</option>
+                </select>
+            </div>
+        </div>
+        <template if:true={percentageVisible}>
+            <label class="slds-form-element__label" for="select-02">
+                <abbr class="slds-required" title="required">* </abbr>Select Label</label>
+            <div class="slds-form-element__control">
+                <div class="slds-select_container">
+                    <select class="slds-select" id="select-02" required="">
+                        <option value="">Select…</option>
+                        <option>Option One</option>
+                        <option>Option Two</option>
+                        <option>Option Three</option>
+                    </select>
+                </div>
+            </div>
+        </template>
+
+    </div>
+</template>

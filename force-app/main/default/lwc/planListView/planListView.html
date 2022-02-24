@@ -1,0 +1,43 @@
+<template>
+    <div class="slds-grid slds-gutters slds-m-top_x-large slds-m-bottom_medium">
+        <div class="slds-col">
+          <!-- Base variant: Makes a button look like a link -->
+          <!-- <lightning-button variant="base" label="AttentisHealth Choice Plan (HMO)"
+            title="AttentisHealth Choice Plan (HMO)" onclick={handleClick}
+            class="slds-m-left_x-small btn-link slds-text-title_bold"></lightning-button> -->
+            <button class="slds-button slds-button_neutral slds-button_full-width slds-text-align_left btn-link slds-text-title_bold" onclick={handleClick}>AttentisHealth Choice Plan (HMO)</button>
+          <br>
+        </div>
+        <div class="slds-col slds-grid_vertical-align-center slds-grid_align-center slds-text-heading_x-large">
+          <strong>$12.50/mo</strong>
+        </div>
+          
+   
+        <!--buttons-->
+  
+        <div class="slds-col slds-text-align_center double-border">
+          <div class="slds-grid slds-grid_align-center slds-m-bottom_medium">
+            <vlocity_ins-button theme="slds" type="button" name="select" variant="brand" label="Select for Quote" style="min-width:150px;"
+              class="custom-btn" icon="utility:close" icon-position="right" bg-color="#93C83D">
+            </vlocity_ins-button>
+          </div>
+          <div class="slds-grid slds-grid_align-center">
+            <vlocity_ins-button theme="slds" type="button" name="enroll" variant="brand" label="Enroll now"  style="min-width:150px;"
+              class="custom-btn" icon="utility:close" icon-position="right" bg-color="#93C83D">
+            </vlocity_ins-button>
+          </div>
+        </div>
+        </div>
+        <!--end buttons-->
+  
+        <div>
+          <div>
+            <span>View Plan Details </span>
+          </div>
+          <div>
+            <a href="javascript:;" target="_blank" class="green-link">
+              Evidence of Coverage - English</a>
+          </div>
+        </div>
+  
+</template>

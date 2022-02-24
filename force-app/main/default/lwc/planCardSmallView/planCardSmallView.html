@@ -1,0 +1,39 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 11-12-2021
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+
+  <!--
+  <ul class="slds-list_horizontal">
+  </ul>-->
+  <div class="slds-grid slds-wrap slds-gutters slds-size_12-of-12">
+      <template for:each={plans} for:item="plan" for:index="index">
+        <div key={plan.Id} class="slds-col slds-small-size slds-size_1-of-3">
+          <div class="plancard">
+            <div class="planName">{plan.Name}</div>
+            <div><br></div>
+            <div class="emptyBlock"></div>
+            <div class="lineBlock">
+              <div class="line"></div>
+            </div>
+            <div><br></div>
+            <div class="pricemo">${plan.Price}/mo.</div>
+            <div><br></div>
+            <div class="centerText">
+              <lightning-button data-id={index} class="plandetails" variant="base" label="View Plan Details"
+                onclick={openModal}>
+              </lightning-button>
+            </div>
+          </div>
+        </div>
+      </template>
+  </div>
+
+  <!--Modal-->
+  <c-plan-modal product={product}> </c-plan-modal>
+
+</template>

@@ -1,0 +1,107 @@
+<template>
+
+  <!-- select elements -->
+
+  <!-- <c-form-test></c-form-test> -->
+
+  <div class="slds-box slds-m-bottom_medium">
+    <h2 class="slds-text-heading_medium slds-text-align_center slds-m-bottom_medium">Quoted Plans</h2>
+    <div class="slds-grid slds-gutters">
+      <div class="slds-form-element slds-col">
+        <label class="slds-form-element__label" for="select-01">
+          <h3 class="slds-text-heading_small slds-text-title_bold">Sort</h3>
+        </label>
+        <div class="slds-form-element__control">
+          <div class="slds-select_container">
+            <select class="slds-select" id="select-01">
+              <option value="">Premium low to high</option>
+              <option>Option One</option>
+              <option>Option Two</option>
+              <option>Option Three</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="slds-col">
+        <div class="slds-form-element">
+          <label class="slds-form-element__label" for="select-02">
+            <h3 class="slds-text-heading_small slds-text-title_bold">Filter</h3>
+          </label>
+          <div class="slds-form-element__control">
+            <div class="slds-select_container">
+              <select class="slds-select" id="select-02">
+                <option value="">PCP Required</option>
+                <option>Option One</option>
+                <option>Option Two</option>
+                <option>Option Three</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="slds-form-element">
+          <label class="slds-form-element__label" for="select-03"></label>
+          <div class="slds-form-element__control">
+            <div class="slds-select_container">
+              <select class="slds-select" id="select-03">
+                <option value="">Dental</option>
+                <option>Option One</option>
+                <option>Option Two</option>
+                <option>Option Three</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="slds-form-element">
+          <label class="slds-form-element__label" for="select-04"></label>
+          <div class="slds-form-element__control">
+            <div class="slds-select_container">
+              <select class="slds-select" id="select-04">
+                <option value="">Plan Type</option>
+                <option>Option One</option>
+                <option>Option Two</option>
+                <option>Option Three</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slds-col slds-grid slds-grid_vertical-align-center slds-grid_align-center">
+        <button class="slds-button slds-button_neutral custom-btn btn-navy" type="reset">Reset</button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- toggle element -->
+
+
+  <div class="slds-form-element">
+    <label class="slds-checkbox_toggle slds-grid">
+      <span class="slds-form-element__label slds-m-bottom_none">Show Details and Compare Plans</span>
+      <input type="checkbox" name="checkbox-toggle-15" value={clickedButtonLabel} aria-describedby="checkbox-toggle-15"
+        title="Show" onclick={handleClick} />
+      <span id="checkbox-toggle-15" class="slds-checkbox_faux_container" aria-live="assertive">
+        <span class="slds-checkbox_faux"></span>
+      </span>
+    </label>
+  </div>
+
+  <!-- plan list -->
+  <template if:false={boolVisible}>
+    <c-plan-list-view></c-plan-list-view>
+  </template>
+
+  <!-- plan details -->
+
+  <template if:true={boolVisible}>
+    <div if:false={isLoaded}>
+      <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+    </div>
+    <c-plan-detailed-view></c-plan-detailed-view>
+    <!-- <c-product-selection-test></c-product-selection-test> -->
+  </template>
+
+
+</template>

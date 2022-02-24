@@ -1,0 +1,89 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 11-12-2021
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+  
+  <!--RX view-->
+    <template for:each={plansOrdered} for:item="plan" for:index="index">
+      <div key={plan.Id}>
+        <div class={plan.cardBorder}>
+          <div class="sectionDetails">
+            <div class="planname">&nbsp;{plan.Name}</div>
+
+            <div>
+              <div class="block1-3">
+                <div class="boldletters">
+                  <div>&nbsp;Pharmacy Deductible</div>
+                </div>
+                <div>&nbsp;value</div>
+              </div>
+              <div class="block1-3">
+                <div class="boldletters">
+                  <div>Drug Plan Premium</div>
+                </div>
+                <div>value</div>
+              </div>
+              <div class="block1-3">
+                <div class="boldletters">
+                  <div>Health Plan Premium</div>
+                </div>
+                <div>value</div>
+              </div>
+            </div>
+            <br>
+            <div>
+            <div class="block1-3">
+              <div class="boldletters">
+                <div>&nbsp;Annual Premium Cost</div>
+              </div>
+              <div>&nbsp;value</div>
+            </div>
+            <div class="block1-3">
+              <div class="boldletters">
+                <div>Initial Coverage Limit</div>
+              </div>
+              <div>value</div>
+            </div>
+            <div class="block1-3">
+              <div class="boldletters">
+                <div>Pharmacy</div>
+              </div>
+              <div>value</div>
+            </div>
+          </div>
+          </div>
+
+          <div class="sectionbtn">
+            <div class="verticalLine">
+              <div class="verticalLine2">
+                <div class="pricemo">${plan.Price}/mo.</div>
+                <div><br></div>
+                <!--buttons-->
+                <!--view plans details-->
+                <div class="slds-col slds-size_1-of-1">
+                  <div class="slds-grid slds-grid_align-center slds-m-bottom_medium">
+                    <lightning-button variant="brand" class="custom-btn" data-id={index} label="View Plan Details"
+                      onclick={openModal}></lightning-button>
+                  </div>
+                  <!--quote-->
+                  <div class="slds-grid slds-grid_align-center slds-m-bottom_medium">
+                    <lightning-button variant="brand" class="custom-btn" data-id={index} label="RX Details">
+                    </lightning-button>
+                  </div>
+                </div>
+                <!--end buttons-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+
+  <!--Modal-->
+  <c-plan-modal product={product}> </c-plan-modal>
+
+</template>

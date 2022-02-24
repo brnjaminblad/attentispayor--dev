@@ -1,0 +1,22 @@
+/*error msg*/
+.slds-nubbin_bottom-left:after, .slds-nubbin_bottom-left:before {
+    display: none!important;
+    width: 0!important;
+    height: 0!important;
+}
+.btn-navy, .slds-popover_error .slds-popover__footer .slds-button.slds-button_neutral.custom-btn {
+    border-color: #343741;
+    color: #343741;
+    border-radius: 30px;
+}
+
+.btn-navy:hover, .btn-navy:focus, .slds-popover_error .slds-popover__footer .slds-button.slds-button_neutral.custom-btn:hover, .slds-popover_error .slds-popover__footer .slds-button.slds-button_neutral.custom-btn:focus {
+    border-radius: 30px;
+    font-size: 1rem;
+    border-color: #343741;
+    background-color: #343741;
+    color: #fff;
+}
+.btn-custom {
+    border-radius: 30px;
+}

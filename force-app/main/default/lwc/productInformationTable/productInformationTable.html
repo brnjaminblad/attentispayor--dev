@@ -1,0 +1,142 @@
+<template>
+	<!--<template if:true={omniSpinnerEnabled}>
+		<div class="slds-spinner-container__wrapper">
+			<vlocity_ins-spinner variant="base"
+				alternative-text="Loading.."
+				size="medium">
+			</vlocity_ins-spinner>
+		</div>
+	</template>-->
+    <table class="slds-table slds-no-row-hover slds-table_bordered slds-table_col-bordered" style="border-bottom: none;">
+        <tr class="table-row">
+            <td class="label-header" style="width:7%; border: none"></td>
+            <td class="label-header" style="width:20%">Expected</td>
+            <td class="label-header" style="width:20%">
+                Proposed Guarantee
+            </td>
+            <td class="label-header" style="width:20%">Billable / Guarantee</td>
+            <td class="label-header" style="width:20%">Risk / Spread</td>
+        </tr>
+    </table>
+
+    <table class="slds-table slds-no-row-hover slds-table_bordered slds-table_col-bordered">
+        <tr class="table-row">
+            <th style="border: none; width: 8%"></th>
+            <th class="row-subtitle">IC Discount</th>
+            <th class="row-subtitle">DF/RX</th>
+            <th class="row-subtitle">IC Discount</th>
+            <th class="row-subtitle">DF/RX</th>
+            <th class="row-subtitle">IC</th>
+            <th class="row-subtitle">DF</th>
+            <th class="row-subtitle">IC</th>
+            <th class="row-subtitle"> DF</th>
+        </tr>
+        <tr>
+            <td class='label-td'>Brand</td>
+            <td class={brandExpectedICDiscountClass}>{brandExpectedICDiscount}%</td>
+            <td class={brandExpectedDFRXClass}>${brandExpectedDFRX}</td>
+            <td class={brandProposedICDiscountClass}>
+                    <template if:true={editable}>
+                        <div class="slds-grid slds-grid_vertical-align-center" style="position: relative;top: -10px;">
+                            <lightning-input 
+                                class='input-td'
+                                type="text" 
+                                name="input1" 
+                                onchange={handleInputChange}
+                                data-id={brandProposedICDiscountId}
+                                value={brandProposedICDiscount} 
+                            >
+                            </lightning-input>
+                            <span style="text-align: end;position: relative; top:10px">%</span>
+                        </div>
+                    </template>
+                    <template if:false={editable}>
+                        <div class="slds-grid slds-grid_vertical-align-center">
+                            {brandProposedICDiscount}
+                            <span>%</span>
+                        </div>
+                    </template>
+            </td>
+            <td class={brandProposedDFRXClass}>
+                    <template if:true={editable}>
+                        <div class="slds-grid slds-grid_vertical-align-center" style="position: relative;top: -10px;">
+                            <span style="position: relative; top:10px">$</span>
+                            <lightning-input 
+                                class='input-td' 
+                                type="text" 
+                                name="input2" 
+                                onchange={handleInputChange}
+                                data-id={brandProposedDFRXId}
+                                value={brandProposedDFRX} 
+                            >
+                            </lightning-input>
+                        </div>
+                    </template>
+                    <template if:false={editable}>
+                        <div class="slds-grid slds-grid_vertical-align-center">
+                            <span>$</span>
+                            {brandProposedDFRX}
+                        </div>
+                    </template>
+            </td>
+            <td class={brandBillableGuaranteeICClass}>${brandBillableGuaranteeIC}</td>
+            <td class={brandBillableGuaranteeDFClass}>${brandBillableGuaranteeDF}</td>
+            <td class={brandRiskSpreadICClass}>${brandRiskSpreadIC}</td>
+            <td class={brandRiskSpreadDFClass}>${brandRiskSpreadDF}</td>
+        </tr>
+        <tr>
+            <td class='label-td'>Generic</td>
+            <td class={genericExpectedICDiscountClass}>{genericExpectedICDiscount}%</td>
+            <td class={genericExpectedDFRXClass}>${genericExpectedDFRX}</td>
+            <td class={genericProposedICDiscountClass}>
+                    <template if:true={editable}>
+                        <div class="slds-grid slds-grid_vertical-align-center" style="position: relative;top: -10px;">
+                            <lightning-input 
+                            class='input-td' 
+                            type="text"
+                            name="input3" 
+                            onchange={handleInputChange}
+                            data-id={genericProposedICDiscountId}
+                            value={genericProposedICDiscount} 
+                            >
+                            </lightning-input>
+                            <span style="text-align: end;position: relative; top:10px">%</span>
+                        </div>
+                    </template>
+                    <template if:false={editable}>
+                        <div class="slds-grid slds-grid_vertical-align-center">
+                            {genericProposedICDiscount}
+                            <span>%</span>
+                        </div>
+                    </template>
+            </td>
+            <td class={genericProposedDFRXClass}>
+                    <template if:true={editable}>
+                    <div class="slds-grid slds-grid_vertical-align-center" style="position: relative;top: -10px;">
+
+                        <span style="position: relative; top:10px">$</span>
+                        <lightning-input 
+                        class='input-td' 
+                        type="text" 
+                        name="input4" 
+                        onchange={handleInputChange}
+                        data-id={genericProposedDFRXId}
+                        value={genericProposedDFRX} 
+                        >
+                        </lightning-input>
+                    </div>
+                    </template>
+                    <template if:false={editable}>
+                    <div class="slds-grid slds-grid_vertical-align-center">
+                        <span>$</span>
+                        {genericProposedDFRX}
+                    </div>
+                    </template>
+            </td>
+            <td class={genericBillableGuaranteeICClass}>${genericBillableGuaranteeIC}</td>
+            <td class={genericBillableGuaranteeDFClass}>${genericBillableGuaranteeDF}</td>
+            <td class={genericRiskSpreadICClass}>${genericRiskSpreadIC}</td>
+            <td class={genericRiskSpreadDFClass}>${genericRiskSpreadDF}</td>
+        </tr>
+    </table>
+</template>

@@ -1,0 +1,523 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 11-15-2021
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<apex:page renderAs="pdf" showHeader="false" applyHtmlTag="false" controller="MedicareApplicationPDFController">
+
+    <head>
+        <title>Application PDF</title>
+        <style type="text/css" media="print">
+            body {
+
+                font-family: 'Open Sans', Arial, sans-serif;
+            }
+        </style>
+    </head>
+
+    <!--Logo-->
+    <img src="{!$Resource.AttentisLogo}" width="auto" height="40" align="left" />
+
+    <p style="text-align: right; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+        <!-- <b>Current Date:</b> -->
+        <apex:outputText value="{!MONTH(TODAY())}/{!DAY(TODAY())}/{!YEAR(TODAY())}" style="margin-left: 5px; font-family: sans-serif; font-size: 12px;"
+        />
+    </p>
+
+
+    <p style="text-align: center; font-size: 18px; margin-top: 70px; font-weight: bold;">Medicare Advantage Plan Enrollment Submission</p>
+
+
+
+
+    <!--Subscriber info -->
+    <div style="border: solid 1px #d8dde6; margin-bottom: 5px;">
+        <table style="margin-bottom: 10px; width:100%;">
+            <tr>
+                <th style="padding-bottom: 10px; padding-left: 10px; font-size: 15px; padding-top: 5px; text-transform: uppercase;">
+                    <b>
+                        Subscriber Information
+                    </b>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <apex:outputText rendered="{!IF(applicationRec.vlocity_ins__AccountId__c != null, true, false)}" value="{!applicationRec.vlocity_ins__AccountId__r.Name}"
+                        style="margin-left: 10px; font-family: sans-serif; font-size: 13px; padding-bottom: 0; margin-bottom: 0;"
+                    />
+                </td>
+
+            </tr>
+            <tr>
+                <td>
+                    <apex:outputText rendered="{!IF(applicationRec.vlocity_ins__PrimaryContactId__c != null, true, false)}" value="{!applicationRec.vlocity_ins__PrimaryContactId__r.MailingStreet}"
+                        style="margin-left: 10px; font-family: sans-serif; font-size: 13px; padding-bottom: 0; margin-bottom: 0;"
+                    />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <apex:outputText rendered="{!IF(applicationRec.vlocity_ins__PrimaryContactId__c != null, true, false)}" value=" {!applicationRec.vlocity_ins__PrimaryContactId__r.MailingCity}, {!applicationRec.vlocity_ins__PrimaryContactId__r.MailingState}, {!applicationRec.vlocity_ins__PrimaryContactId__r.MailingPostalCode}"
+                        style="margin-left: 10px; font-family: sans-serif; font-size: 13px; padding-bottom: 0; margin-bottom: 0;"
+                    />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <apex:outputText rendered="{!IF(applicationRec.vlocity_ins__PrimaryContactId__r.Primary_Phone__c == "Home", true, false)}" value="{!applicationRec.vlocity_ins__PrimaryContactId__r.HomePhone}" style="margin-left: 10px;font-family: sans-serif; font-size: 13px; padding-bottom: 0; margin-bottom: 0;"/>
+                    <apex:outputText rendered="{!IF(applicationRec.vlocity_ins__PrimaryContactId__r.Primary_Phone__c == "Mobile", true, false)}" value="{!applicationRec.vlocity_ins__PrimaryContactId__r.MobilePhone}" style="margin-left: 10px;font-family: sans-serif; font-size: 13px; padding-bottom: 0; margin-bottom: 0;"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <b style="margin-left: 10px;  font-size: 13px">Submitted on: </b>
+                    <apex:outputText rendered="{!IF(applicationRec.Medi_App_Agreement_Date__c != null, true, false)}" value="{!MONTH(applicationRec.Medi_App_Agreement_Date__c)}/{!DAY(applicationRec.Medi_App_Agreement_Date__c)}/{!YEAR(applicationRec.Medi_App_Agreement_Date__c)}" style="font-family: sans-serif; font-size: 13px; padding-bottom: 0; margin-bottom: 0;" />
+                    <apex:outputText rendered="{!IF(applicationRec.Medi_App_Agreement_Date__c == null, true, false)}" value="{!MONTH(TODAY())}/{!DAY(TODAY())}/{!YEAR(TODAY())}"
+                        style="font-family: sans-serif; font-size: 13px; padding-bottom: 0; margin-bottom: 0;" />
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+    <!-- Application Summary -->
+    <div style="border: solid 1px #d8dde6; margin-bottom: 5px;">
+        <table style="margin-bottom: 10px; width:100%;">
+            <tr>
+                <th style="padding-bottom: 10px; padding-left: 10px; font-size: 15px; padding-top: 5px; text-transform: uppercase;">
+                    <b>
+                        Application Summary
+                    </b>
+                </th>
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <b>Selected plan: </b>
+                    <apex:outputText rendered="{!IF(applicationRec.vlocity_ins__Product2Id__c != null, true, false)}" value="{!applicationRec.vlocity_ins__Product2Id__r.Name}"
+                    />
+                </td>
+
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <b>Application Number: </b>
+                    <apex:outputText rendered="{!IF(applicationRec.id != null, true, false)}" value="{!applicationRec.id}" />
+                </td>
+
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <b>Estimated Monthly Premium: </b>
+                    <apex:outputText rendered="{!IF(applicationRec.vlocity_ins__QuoteId__r.TotalPrice != null, true, false)}" value="${!applicationRec.vlocity_ins__QuoteId__r.TotalPrice}"
+                    />
+                </td>
+
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <b>Proposed Effective Date: </b>
+                    <apex:outputText rendered="{!IF(applicationRec.Medi_Requested_Effective_Date__c != null, true, false)}" value="{!MONTH(applicationRec.Medi_Requested_Effective_Date__c)}/{!DAY(applicationRec.Medi_Requested_Effective_Date__c)}/{!YEAR(applicationRec.Medi_Requested_Effective_Date__c)}"/>
+                   
+                   
+                </td>
+
+            </tr>
+            <!-- <tr>
+                <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <b>Proposed Effective Date: </b>
+                  
+                    <apex:outputText rendered="{!IF(applicationRec.Req_Eff_Date__c != null, true, false)}" value="{!applicationRec.Req_Eff_Date__c}"/>
+                   
+                </td>
+
+            </tr> -->
+
+        </table>
+        <div style="padding-left: 10px; margin-bottom: 5px; font-size: 12px">Your actual coverage start date will be defined once your enrollment is confirmed.</div>
+        <div style="padding-left: 10px; margin-bottom: 10px;  font-size: 12px">*If you selected a specific low income subsidy (LIS), it is reflected in the premium shown. Actual premium will be
+            determined once your enrollment is confirmed.</div>
+    </div>
+
+    <!-- Application Details -->
+
+    <div style="border: solid 1px #d8dde6; margin-bottom: 5px;">
+        <table style="margin-bottom: 10px; width:100%;">
+            <tr style="padding-left: 10px; font-size: 14px; padding-top: 5px;">
+                <th style="padding-bottom: 10px; padding-left: 10px; font-size: 15px; padding-top: 5px; text-transform: uppercase;">
+                    <b>
+                        Application Details
+                    </b>
+                </th>
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; font-size: 14px; font-weight: bold; padding-bottom: 7px;">Personal Information</td>
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <b>Salutation: </b>
+                    <apex:outputText rendered="{!IF(applicationRec.vlocity_ins__PrimaryContactId__c != null, true, false)}" value="{!applicationRec.vlocity_ins__PrimaryContactId__r.Salutation}"
+                    />
+                </td>
+
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <b>First Name: </b>
+                    <apex:outputText rendered="{!IF(applicationRec.vlocity_ins__PrimaryContactId__c  != null, true, false)}" value="{!applicationRec.vlocity_ins__PrimaryContactId__r.FirstName}"
+                    />
+                </td>
+
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <b>Last Name: </b>
+                    <apex:outputText rendered="{!IF(applicationRec.vlocity_ins__PrimaryContactId__c  != null, true, false)}" value="{!applicationRec.vlocity_ins__PrimaryContactId__r.LastName}"
+                    />
+                </td>
+
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <b>Middle Initial: </b>
+                    <apex:outputText rendered="{!IF(applicationRec.vlocity_ins__PrimaryContactId__c != null, true, false)}" value="{!applicationRec.vlocity_ins__PrimaryContactId__r.vlocity_ins__MiddleName__c}"
+                    />
+                </td>
+
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <b>Date of Birth: </b>
+                    <apex:outputText rendered="{!IF(applicationRec.vlocity_ins__PrimaryContactId__r.Birthdate  != null, true, false)}" value="{!MONTH(applicationRec.vlocity_ins__PrimaryContactId__r.Birthdate)}/{!DAY(applicationRec.vlocity_ins__PrimaryContactId__r.Birthdate)}/{!YEAR(applicationRec.vlocity_ins__PrimaryContactId__r.Birthdate)}"
+                    />
+
+                </td>
+
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <b>Gender: </b>
+                    <apex:outputText rendered="{!IF(applicationRec.vlocity_ins__PrimaryContactId__r.vlocity_ins__Gender__c  != null, true, false)}"
+                        value="{!applicationRec.vlocity_ins__PrimaryContactId__r.vlocity_ins__Gender__c}" />
+
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; 
+                font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <b>Home Phone Number: </b>
+                    <apex:outputText rendered="{!IF(applicationRec.vlocity_ins__PrimaryContactId__r.HomePhone != null, true, false)}" value="{!applicationRec.vlocity_ins__PrimaryContactId__r.HomePhone}"
+                    />
+                    <apex:outputText rendered="{!IF(applicationRec.vlocity_ins__PrimaryContactId__r.Primary_Phone__c == "Home", true, false)}" value=", Primary" />
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; padding-bottom: 20px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <b>Cell Phone Number: </b>
+                    <apex:outputText rendered="{!IF(applicationRec.vlocity_ins__PrimaryContactId__r.MobilePhone != null, true, false)}" value="{!applicationRec.vlocity_ins__PrimaryContactId__r.MobilePhone}"
+                    />
+                    <apex:outputText rendered="{!IF(applicationRec.vlocity_ins__PrimaryContactId__r.Primary_Phone__c == "Mobile", true, false)}" value=", Primary" />
+                </td>
+            </tr>
+
+
+            <!-- Resident Address -->
+
+            <tr>
+                <td style="padding-left: 10px; font-size: 14px; font-weight: bold; padding-bottom: 7px;">Resident Address </td>
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <b>Permanent Address Line: </b>
+                    <apex:outputText rendered="{!IF(applicationRec.vlocity_ins__AccountId__r.BillingStreet != null, true, false)}" value="{!applicationRec.vlocity_ins__AccountId__r.BillingStreet}"
+                    />
+                </td>
+
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <b>Permanent Address City: </b>
+                    <apex:outputText rendered="{!IF(applicationRec.vlocity_ins__AccountId__r.BillingCity != null, true, false)}" value="{!applicationRec.vlocity_ins__AccountId__r.BillingCity}"
+                    />
+                </td>
+
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <b>Permanent Address State: </b>
+                    <apex:outputText rendered="{!IF(applicationRec.vlocity_ins__AccountId__r.BillingState != null, true, false)}" value="{!applicationRec.vlocity_ins__AccountId__r.BillingState}"
+                    />
+                </td>
+
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <b>Permanent Address Zip Code: </b>
+                    <apex:outputText rendered="{!IF(applicationRec.vlocity_ins__AccountId__r.BillingPostalCode != null, true, false)}" value="{!applicationRec.vlocity_ins__AccountId__r.BillingPostalCode}"
+                    />
+                </td>
+
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; padding-bottom: 7px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <b>Permanent Address County: </b>
+                    <apex:outputText rendered="{!IF(applicationRec.vlocity_ins__AccountId__r.County__c != null, true, false)}" value="{!applicationRec.vlocity_ins__AccountId__r.County__c}"
+                    />
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <b>Mailing Address Line: </b>
+                    <apex:outputText rendered="{!IF(applicationRec.vlocity_ins__PrimaryContactId__c != null, true, false)}" value="{!applicationRec.vlocity_ins__PrimaryContactId__r.MailingStreet}"
+                        style="font-family: sans-serif; font-size: 12px;" />
+                    
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <b>Mailing Address City: </b>
+                    <apex:outputText rendered="{!IF(applicationRec.vlocity_ins__PrimaryContactId__c != null, true, false)}" value=" {!applicationRec.vlocity_ins__PrimaryContactId__r.MailingCity}"
+                        style="font-family: sans-serif; font-size: 12px;" />
+                  
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <b>Mailing Address State: </b>
+                    <apex:outputText rendered="{!IF(applicationRec.vlocity_ins__PrimaryContactId__c != null, true, false)}" value=" {!applicationRec.vlocity_ins__PrimaryContactId__r.MailingState}"
+                        style="font-family: sans-serif; font-size: 12px;" />
+                   
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; padding-bottom: 20px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <b>Mailing Address Zip Code: </b>
+                    <apex:outputText rendered="{!IF(applicationRec.vlocity_ins__PrimaryContactId__c != null, true, false)}" value=" {!applicationRec.vlocity_ins__PrimaryContactId__r.MailingPostalCode}"
+                        style="font-family: sans-serif; font-size: 12px;" />
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <apex:outputText rendered="{!IF(applicationRec.vlocity_ins__PrimaryContactId__r.Emergency_Contact__c != null, true, false)}" value="Emergency Contact Name: "
+                    style="font-weight: bold;" />
+                    <apex:outputText rendered="{!IF(applicationRec.vlocity_ins__PrimaryContactId__r.Emergency_Contact__c != null, true, false)}" value="{!applicationRec.vlocity_ins__PrimaryContactId__r.Emergency_Contact__c}"
+                    style="padding-bottom: 20px;" />
+                
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <apex:outputText rendered="{!IF(applicationRec.vlocity_ins__PrimaryContactId__r.Emergency_Contact__c != null, true, false)}" value="Emergency Contact Phone Number: "
+                    style="font-weight: bold;" />
+                    <apex:outputText rendered="{!IF(applicationRec.vlocity_ins__PrimaryContactId__r.Emergency_Contact__c != null, true, false)}" value="{!applicationRec.vlocity_ins__PrimaryContactId__r.Emergency_Phone__c}"
+                    style="padding-bottom: 20px;" />
+                
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top; padding-bottom: 20px">
+                    <apex:outputText rendered="{!IF(applicationRec.vlocity_ins__PrimaryContactId__r.Emergency_Contact__c != null, true, false)}" value="Emergency Contact Relationship: "
+                    style="font-weight: bold; padding-bottom: 20px;" />
+                    <apex:outputText rendered="{!IF(applicationRec.vlocity_ins__PrimaryContactId__r.Emergency_Contact__c != null, true, false)}" value="{!applicationRec.vlocity_ins__PrimaryContactId__r.Emergency_Relationship__c}"
+                    style="padding-bottom: 20px;" />
+                
+                </td>
+            </tr>
+           
+
+            <!-- Medicare Insurance Information -->
+
+
+            <tr>
+                <td style="padding-left: 10px; font-size: 14px; font-weight: bold; padding-bottom: 7px;">Medicare Insurance Information</td>
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <b>Medicare Number: </b>
+                    <apex:outputText rendered="{!IF(applicationRec.Medicare_Number__c != null, true, false)}" value="{!applicationRec.Medicare_Number__c}"
+                    />
+                  
+                </td>
+
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <b>Hospital (Part A) Effective Date: </b>
+                    <apex:outputText rendered="{!IF(applicationRec.Medi_Hospital_PartA__c  != null, true, false)}" value="{!MONTH(applicationRec.Medi_Hospital_PartA__c)}/{!DAY(applicationRec.Medi_Hospital_PartA__c)}/{!YEAR(applicationRec.Medi_Hospital_PartA__c)}"
+                    />
+                  
+                </td>
+
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; padding-bottom: 20px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <b>Medical (Part B) Effective Date: </b>
+                    <apex:outputText rendered="{!IF(applicationRec.Medi_Medical_PartB__c  != null, true, false)}" value="{!MONTH(applicationRec.Medi_Medical_PartB__c)}/{!DAY(applicationRec.Medi_Medical_PartB__c)}/{!YEAR(applicationRec.Medi_Medical_PartB__c)}"
+                    />
+                   
+                </td>
+            </tr>
+
+
+            <!-- Important Information -->
+
+
+            <tr>
+                <td style="padding-left: 10px; font-size: 14px; font-weight: bold; padding-bottom: 7px;">Important Information</td>
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <b>Will you have other prescription drug coverage in addition to this plan: </b>
+                    <apex:outputText rendered="{!IF(applicationRec.Medi_Other_PD_Cov__c != null, true, false)}" value="{!applicationRec.Medi_Other_PD_Cov__c}"
+                    />
+                    <apex:outputText rendered="{!IF(applicationRec.Medi_Other_PD_Cov__c == null, true, false)}" value="Not applicable"
+                    />
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <apex:outputText rendered="{!IF(applicationRec.Medi_Other_PD_Cov__c == "Yes", true, false)}" value="Name of other coverage: " style="font-weight: bold;"
+                    />
+                    
+                    <apex:outputText rendered="{!IF(applicationRec.Medi_Other_PD_Cov__c == "Yes", true, false)}" value="{!applicationRec.Medi_PD_Cov_Name__c}"
+                    />
+                    <apex:outputText rendered="{!IF(applicationRec.Medi_Other_PD_Cov__c == null, true, false)}" value="Not applicable"
+                    />
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <apex:outputText rendered="{!IF(applicationRec.Medi_Other_PD_Cov__c == "Yes", true, false)}" value="Coverage ID for this coverage: " style="font-weight: bold;"
+                    />
+                    <apex:outputText rendered="{!IF(applicationRec.Medi_Other_PD_Cov__c == "Yes", true, false)}" value="{!applicationRec.Medi_PD_Cov_Id__c}"
+                    />
+                    
+                </td>
+            </tr>
+
+            <tr>
+                <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <apex:outputText rendered="{!IF(applicationRec.Medi_Other_PD_Cov__c == "Yes", true, false)}" value="Group for this coverage: " style="font-weight: bold;"
+                    />
+                    <apex:outputText rendered="{!IF(applicationRec.Medi_Other_PD_Cov__c == "Yes", true, false)}" value="{!applicationRec.Medi_PD_Cov_Group__c}"
+                    />
+                </td>
+            </tr>
+
+            <tr>
+                <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <b>Are you enrolled in your state Medicaid program: </b>
+                    <apex:outputText rendered="{!IF(applicationRec.Medi_Enrolled_Medicaid__c != null, true, false)}" value="{!applicationRec.Medi_Enrolled_Medicaid__c}"
+                    />
+                    <apex:outputText rendered="{!IF(applicationRec.Medi_Enrolled_Medicaid__c == null, true, false)}" value="Not applicable" />
+                </td>
+
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <apex:outputText rendered="{!IF(applicationRec.Medi_Enrolled_Medicaid__c == "Yes", true, false)}" value="Medicaid Number: "
+                        style="font-weight: bold;" />
+                    <apex:outputText rendered="{!IF(applicationRec.Medi_Enrolled_Medicaid__c == "Yes" && applicationRec.Medi_Medicaid_Number__c != null, true, false)}" value="{!(applicationRec.Medi_Medicaid_Number__c)}" />
+                </td>
+
+            </tr>
+   
+            <tr>
+                <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <b>Primary Care Physician (PCP): </b>
+                    <apex:outputText rendered="{!IF(applicationRec.Medi_PCP_FirstName__c == null && applicationRec.Medi_PCP_LastName__c == null, true, false)}"
+                    value="Not applicable" />
+                    
+
+                    <apex:outputText rendered="{!IF(applicationRec.Medi_PCP_FirstName__c != null, true, false)}" value="{!applicationRec.Medi_PCP_FirstName__c} "
+                    />
+
+                    <apex:outputText rendered="{!IF(applicationRec.Medi_PCP_LastName__c != null, true, false)}" value="{!applicationRec.Medi_PCP_LastName__c}"
+                    />
+
+                </td>
+
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <apex:outputText rendered="{!IF(applicationRec.Medi_PCP_FirstName__c != null || applicationRec.Medi_PCP_LastName__c != null, true, false)}"
+                        value="PCP #: " style="font-weight: bold;" />
+                    <apex:outputText rendered="{!IF((applicationRec.Medi_PCP_FirstName__c != null || applicationRec.Medi_PCP_LastName__c != null) && applicationRec.Medi_PCP_Current_Patient__c !=null, true, false)}"
+                        value="{!applicationRec.Medi_PCP_Number__c}" style="padding-bottom: 20px;"/>
+    
+                </td>
+
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; padding-bottom: 20px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <apex:outputText rendered="{!IF(applicationRec.Medi_PCP_FirstName__c != null || applicationRec.Medi_PCP_LastName__c != null, true, false)}"
+                        value="Current Patient: " style="font-weight: bold;" />
+                    <apex:outputText rendered="{!IF((applicationRec.Medi_PCP_FirstName__c != null || applicationRec.Medi_PCP_LastName__c != null) && applicationRec.Medi_PCP_Current_Patient__c == true, true, false)}"
+                        value="Yes" />
+                        <apex:outputText rendered="{!IF((applicationRec.Medi_PCP_FirstName__c != null || applicationRec.Medi_PCP_LastName__c != null) && applicationRec.Medi_PCP_Current_Patient__c == false, true, false)}"
+                        value="No" />
+                    
+                </td>
+
+            </tr>
+
+            <!-- Special Enrollment Reason -->
+
+          
+             <tr>
+                <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <apex:outputText rendered="{!IF(applicationRec.Medi_SEP_Reason__c != null, true, false)}" value="Special Enrollment Reason: "
+                        style="font-weight: bold;" />
+                    <apex:outputText rendered="{!IF(applicationRec.Medi_SEP_Reason__c != null, true, false)}" value="{!applicationRec.Medi_SEP_Reason__c}"
+                    />
+                </td>
+
+            </tr>
+           <tr>
+                <td style="padding-left: 10px; padding-bottom: 20px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <apex:outputText rendered="{!IF(applicationRec.Medi_SEP_Reason__c != null, true, false)}" value="Effective Date for this reason: "
+                        style="font-weight: bold;" />
+                    <apex:outputText rendered="{!IF(applicationRec.Medi_SEP_Date__c != null && applicationRec.Medi_SEP_Reason__c != null, true, false)}" value="{!MONTH(applicationRec.Medi_SEP_Date__c)}/{!DAY(applicationRec.Medi_SEP_Date__c)}/{!YEAR(applicationRec.Medi_SEP_Date__c)}"
+                    />
+                </td>
+
+            </tr>
+            
+
+            <!-- Payment Method-->
+
+
+            <tr>
+                <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <apex:outputText rendered="{!IF(applicationRec.Medi_Deduct_from_SSA_or_RRB__c == "Yes", true, false)}" value="Payment Method"
+                        style="font-size: 14px; font-weight: bold; padding-bottom: 7px; display: table-cell;" />
+
+                    <apex:outputText rendered="{!IF(applicationRec.Medi_Deduct_from_SSA_or_RRB__c == "Yes", true, false)}" value="Would you like the premium for this plan to be deducted from your SSA or RRB monthly benefit check? "
+                        style="font-weight: bold;" />
+                    <apex:outputText rendered="{!IF(applicationRec.Medi_Deduct_from_SSA_or_RRB__c == "Yes", true, false)}" value="{!applicationRec.Medi_Deduct_from_SSA_or_RRB__c}"
+                    />
+
+                </td>
+
+            </tr>
+            <tr>
+                <td style="padding-left: 10px; padding-bottom: 20px; font-size: 12px; font-family: sans-serif; vertical-align:top;">
+                    <apex:outputText rendered="{!IF(applicationRec.Medi_SSA_RRB__c != null && applicationRec.Medi_Deduct_from_SSA_or_RRB__c == "Yes", true, false)}" value="Deduct plan premium from monthly benefit check: " style="font-weight: bold;"
+                    />
+                    <apex:outputText rendered="{!IF(applicationRec.Medi_SSA_RRB__c != null && applicationRec.Medi_Deduct_from_SSA_or_RRB__c == "Yes", true, false)}" value="{!applicationRec.Medi_SSA_RRB__c}" />
+                </td>
+
+            </tr>
+
+        </table>
+
+    </div>
+
+    <!-- footer -->
+
+    <div style="padding-left: 10px; padding-bottom: 20px; padding-top: 20px; text-align: left; font-size: 12px;">Y0000_000000_C</div>
+
+
+</apex:page>

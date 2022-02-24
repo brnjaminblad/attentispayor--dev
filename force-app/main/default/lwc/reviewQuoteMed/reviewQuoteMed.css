@@ -1,0 +1,69 @@
+.line{
+    font-size: large;
+    text-align: center;
+    font-weight: bold;
+    border-top: solid #436BA6;
+}
+
+.space{
+    display:inline-block; 
+    width: 2%;
+}
+
+.pricemo {
+    font-size: large;
+    text-align: center; 
+    font-weight: bold;
+}
+
+.planDetails{
+    font-size: medium;
+    text-align: center;
+    font-weight: bold;
+    color: #436BA6;
+    text-decoration: underline solid #6A9623;
+}
+
+.planName{
+    font-size: medium;
+    text-align: center;
+    font-weight: bold;
+}
+
+/*modal*/
+.modalHeader{
+    display:inline-block;
+    width: 100%;
+    background-color: #c8c9ca;
+}
+
+.modalForm{
+    display:inline-block;
+    width: 100%;
+}
+
+.modalLine { 
+    border-bottom: solid #d2d3d1; 
+
+}
+
+.modalLeftBlock{
+    display:inline-block;
+    width: 50%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.modalRightBlock{
+    display:inline-block;
+    width: 50%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    text-align: center;
+}
+
+.modalViewDetails{
+    text-align: center;
+    font-weight: bold;
+    color: #6A9623;
+}

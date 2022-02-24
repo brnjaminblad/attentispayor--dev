@@ -1,0 +1,33 @@
+/*error msg*/
+ .slds-nubbin_bottom-left:after, .slds-nubbin_bottom-left:before {
+    display: none!important;
+    width: 0!important;
+    height: 0!important;
+}
+
+.slds-select_container:before {
+    display: none!important;
+}
+
+.slds-select {
+    border-color: var(--sds-c-input-color-border, transparent);
+    border-bottom-color: var(--sds-c-input-color-border, #dddbda);
+}
+.slds-checkbox_toggle [type=checkbox]:checked+.slds-checkbox_faux_container .slds-checkbox_faux {
+    background-color: var(--sds-c-checkbox-toggle-color-background, #93C83D);
+        border-color: var(--sds-c-checkbox-toggle-color-border, #93C83D);
+}
+
+/* reset button */
+
+.btn-navy, .slds-popover_error .slds-popover__footer .slds-button.slds-button_neutral.custom-btn {
+    border-color: #343741;
+    color: #343741;
+    border-radius: 30px;
+}
+.btn-navy:hover, .btn-navy:focus, .slds-popover_error .slds-popover__footer .slds-button.slds-button_neutral.custom-btn:hover, .slds-popover_error .slds-popover__footer .slds-button.slds-button_neutral.custom-btn:focus {
+    border-radius: 30px;
+    border-color: #343741;
+    background-color: #343741;
+    color: #fff;
+}

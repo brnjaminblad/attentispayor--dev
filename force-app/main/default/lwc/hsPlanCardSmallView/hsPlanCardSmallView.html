@@ -1,0 +1,26 @@
+<template>
+  <template for:each={plans} for:item="plan" for:index="index">
+    <div key={plan.Id} >
+      <div class="plancard">
+        <div class="planName">{plan.Name}</div>
+        <div><br></div>
+        <div class="emptyBlock"></div>
+        <div class="lineBlock">
+          <div class="line"></div>
+        </div>
+        <div><br></div>
+        <div class="pricemo">${plan.Price}/mo.</div>
+        <div><br></div>
+        <div class="centerText">
+          <lightning-button data-id={index} class="plandetails" variant="base" label="View Plan Details"
+            onclick={openModal}>
+          </lightning-button>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <!--Modal-->
+  <c-hs-plan-modal product={product}> </c-hs-plan-modal>
+
+</template>

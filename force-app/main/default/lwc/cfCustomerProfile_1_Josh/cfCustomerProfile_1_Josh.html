@@ -1,0 +1,84 @@
+<template>
+            <div class="slds-grid slds-wrap slds-is-relative ">
+            <div if:false={cardLoaded} class="slds-is-absolute vloc-loader_override" style="height: 100%; width: 100%; min-height:50px; background: white; z-index: 99;">
+  <div>
+   <vlocity_ins-spinner
+      variant="brand"
+      alternative-text="Loading content..."
+      size="medium"
+      theme="slds"
+      ></vlocity_ins-spinner>
+  </div>
+</div>
+            <template if:false={hasPermission}>
+              You don't have required permissions to view this card.
+            </template>
+            <template if:true={hasPermission}>
+              <template if:true={hasRecords}>
+                        <template for:each={_records} for:item="record" for:index="rindex">
+                            <vlocity_ins-flex-card-state if:true={record}  key={record._flex.uniqueKey} data-recordid={record.Id} record={record} data-statue="true"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12 "  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-theme_default slds-text-align_left slds-card slds-p-around_x-small slds-m-bottom_x-small " style="     : #000000 2px solid; 
+         ">
+          <div data-style-id="state0element0" class="" data-rindex={rindex} style="">
+    <vlocity_ins-block data-style-id="state0element0_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds" ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0" class="" data-rindex={rindex} style="">
+    <vlocity_ins-custom-lwc-wrapper element-name="c-hs-contact-map" property='\{}' data-rindex={rindex} records={records} record={record} record-id={recordId} card={card}><c-hs-contact-map  ></c-hs-contact-map></vlocity_ins-custom-lwc-wrapper>
+    </div>
+        </div></vlocity_ins-block>
+    </div><div data-style-id="state0element1" class="" data-rindex={rindex} style="">
+    <vlocity_ins-block data-style-id="state0element1_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds" ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element1block_element0" class="" data-rindex={rindex} style=""><vlocity_ins-flex-icon data-style-id="state0element1block_element0_child"     card={card}  record={record}  color="#FFFFFF"  icon-type="Salesforce SVG"  icon-name="standard:user"  size="small"  extraclass="slds-icon_container slds-icon-standard-user "  variant="default"  imgsrc=""  theme="slds"  ></vlocity_ins-flex-icon>
+      </div><div data-style-id="state0element1block_element1" class="" data-rindex={rindex} style=""><vlocity_ins-output-field data-style-id="state0element1block_element1_child"     card={card}  record={record}  placeholder="output"  field-name="Name"  label="Name"  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element2" class="" data-rindex={rindex} style=""><vlocity_ins-flex-icon data-style-id="state0element1block_element2_child"     card={card}  record={record}  icon-type="Salesforce SVG"  icon-name="standard:household"  size="small"  extraclass="slds-icon_container slds-icon-standard-household "  variant="inverse"  imgsrc=""  theme="slds"  ></vlocity_ins-flex-icon>
+      </div><div data-style-id="state0element1block_element3" class="" data-rindex={rindex} style=""><vlocity_ins-output-field data-style-id="state0element1block_element3_child"     card={card}  record={record}  placeholder="output"  field-name="Address"  label="Address"  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element4" class="" data-rindex={rindex} style=""><vlocity_ins-flex-icon data-style-id="state0element1block_element4_child"     card={card}  record={record}  icon-type="Salesforce SVG"  icon-name="standard:voice_call"  size="small"  extraclass="slds-icon_container slds-icon-standard-voice-call "  variant="inverse"  imgsrc=""  theme="slds"  ></vlocity_ins-flex-icon>
+      </div><div data-style-id="state0element1block_element5" class="" data-rindex={rindex} style=""><vlocity_ins-output-field data-style-id="state0element1block_element5_child"     card={card}  record={record}  placeholder="output"  field-name="Phone"  label="Phone"  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element6" class="" data-rindex={rindex} style=""><vlocity_ins-flex-icon data-style-id="state0element1block_element6_child"     card={card}  record={record}  icon-type="Salesforce SVG"  icon-name="custom:custom23"  size="small"  extraclass="slds-icon_container slds-icon-custom-custom23 "  variant="inverse"  imgsrc=""  theme="slds"  ></vlocity_ins-flex-icon>
+      </div><div data-style-id="state0element1block_element7" class="" data-rindex={rindex} style=""><vlocity_ins-output-field data-style-id="state0element1block_element7_child"     card={card}  record={record}  placeholder=""  field-name="Email"  label="Email"  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div>
+        </div></vlocity_ins-block>
+    </div>
+        </div>
+      </vlocity_ins-flex-card-state>
+                        </template>
+                      </template>
+                      <template if:false={hasRecords}>
+                            <vlocity_ins-flex-card-state  record={record} data-statue="false"  data-index="0" data-rindex={rindex} class="cf-vlocity-state-0 cf-vlocity-state slds-size_12-of-12 "  tracking-obj={_childCardTrackingObj} >
+      <div if:true={cardLoaded} class="slds-grid slds-wrap slds-theme_default slds-text-align_left slds-card slds-p-around_x-small slds-m-bottom_x-small " style="     : #000000 2px solid; 
+         ">
+          <div data-style-id="state0element0" class="" data-rindex={rindex} style="">
+    <vlocity_ins-block data-style-id="state0element0_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds" ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element0block_element0" class="" data-rindex={rindex} style="">
+    <vlocity_ins-custom-lwc-wrapper element-name="c-hs-contact-map" property='\{}' data-rindex={rindex} records={records} record={record} record-id={recordId} card={card}><c-hs-contact-map  ></c-hs-contact-map></vlocity_ins-custom-lwc-wrapper>
+    </div>
+        </div></vlocity_ins-block>
+    </div><div data-style-id="state0element1" class="" data-rindex={rindex} style="">
+    <vlocity_ins-block data-style-id="state0element1_child"  card={card}  record={record}  label="Block"  collapsible="false"  collapsed-by-default="false"  theme="slds" ><div class="slds-grid slds-wrap">
+          <div data-style-id="state0element1block_element0" class="" data-rindex={rindex} style=""><vlocity_ins-flex-icon data-style-id="state0element1block_element0_child"     card={card}  record={record}  color="#FFFFFF"  icon-type="Salesforce SVG"  icon-name="standard:user"  size="small"  extraclass="slds-icon_container slds-icon-standard-user "  variant="default"  imgsrc=""  theme="slds"  ></vlocity_ins-flex-icon>
+      </div><div data-style-id="state0element1block_element1" class="" data-rindex={rindex} style=""><vlocity_ins-output-field data-style-id="state0element1block_element1_child"     card={card}  record={record}  placeholder="output"  field-name="Name"  label="Name"  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element2" class="" data-rindex={rindex} style=""><vlocity_ins-flex-icon data-style-id="state0element1block_element2_child"     card={card}  record={record}  icon-type="Salesforce SVG"  icon-name="standard:household"  size="small"  extraclass="slds-icon_container slds-icon-standard-household "  variant="inverse"  imgsrc=""  theme="slds"  ></vlocity_ins-flex-icon>
+      </div><div data-style-id="state0element1block_element3" class="" data-rindex={rindex} style=""><vlocity_ins-output-field data-style-id="state0element1block_element3_child"     card={card}  record={record}  placeholder="output"  field-name="Address"  label="Address"  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element4" class="" data-rindex={rindex} style=""><vlocity_ins-flex-icon data-style-id="state0element1block_element4_child"     card={card}  record={record}  icon-type="Salesforce SVG"  icon-name="standard:voice_call"  size="small"  extraclass="slds-icon_container slds-icon-standard-voice-call "  variant="inverse"  imgsrc=""  theme="slds"  ></vlocity_ins-flex-icon>
+      </div><div data-style-id="state0element1block_element5" class="" data-rindex={rindex} style=""><vlocity_ins-output-field data-style-id="state0element1block_element5_child"     card={card}  record={record}  placeholder="output"  field-name="Phone"  label="Phone"  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div><div data-style-id="state0element1block_element6" class="" data-rindex={rindex} style=""><vlocity_ins-flex-icon data-style-id="state0element1block_element6_child"     card={card}  record={record}  icon-type="Salesforce SVG"  icon-name="custom:custom23"  size="small"  extraclass="slds-icon_container slds-icon-custom-custom23 "  variant="inverse"  imgsrc=""  theme="slds"  ></vlocity_ins-flex-icon>
+      </div><div data-style-id="state0element1block_element7" class="" data-rindex={rindex} style=""><vlocity_ins-output-field data-style-id="state0element1block_element7_child"     card={card}  record={record}  placeholder=""  field-name="Email"  label="Email"  type="text"  theme="slds"  ></vlocity_ins-output-field>
+      </div>
+        </div></vlocity_ins-block>
+    </div>
+        </div>
+      </vlocity_ins-flex-card-state>
+                      </template>
+            </template>
+            <template if:true={hasError}>
+            {error}
+            </template>
+            
+      <vlocity_ins-action action-wrapperclass="slds-hide" re-render-flyout class="action-trigger slds-col" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction}>
+      
+      </vlocity_ins-action>
+  
+            <vlocity_ins-action class="execute-action" re-render-flyout action-wrapperclass="slds-hide" onupdateos={updateOmniscript} onselectcards={updateSelectedCards} onsetvalue={updateAction}>
+            
+            </vlocity_ins-action>
+            </div>
+          </template>

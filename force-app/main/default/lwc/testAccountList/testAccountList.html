@@ -1,0 +1,31 @@
+<template>
+    <template for:each={newAccounts} for:item="account" for:index="index">
+        <div key={account.Id} >
+          <div class="">
+            <div class="plancard">{account.Id} - {account.Name}
+                <!-- <lightning-input type="text" value="account.Name" name="input"></lightning-input> -->
+                
+                <div class="centerText">
+                    <lightning-button data-id={index} class="plandetails" variant="base" label="View Account Details"
+                        onclick={openModal}>
+                    </lightning-button>
+                </div>
+            </div>
+            
+            
+            
+            <!-- <div class="pricemo">{account.Id}</div> -->
+            
+            <!-- <div class="centerText">
+              <lightning-button data-id={index} class="plandetails" variant="base" label="View Plan Details"
+                onclick={openModal}>
+              </lightning-button>
+            </div> -->
+          </div>
+        </div>
+      </template>
+
+      
+
+      <c-account-modal account={account}> </c-account-modal>
+</template>

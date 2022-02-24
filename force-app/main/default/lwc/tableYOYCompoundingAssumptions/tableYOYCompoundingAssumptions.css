@@ -1,0 +1,37 @@
+.font{
+    color: black;
+}
+
+.bold{
+    font-weight: bold;
+}
+
+.alignCenter{
+    text-align: center;    
+}
+
+.borderTop{
+    border-top: 1px solid black;
+}
+
+.borderBottom{
+    border-bottom: 1px solid black;
+}
+
+.borderLeft{
+    border-left: 1px solid black;
+}
+
+.borderRight{
+    border-right: 1px solid black;
+}
+
+.borderSides{
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+
+.borderTB{
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}

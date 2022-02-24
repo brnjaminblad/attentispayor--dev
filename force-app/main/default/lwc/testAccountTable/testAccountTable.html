@@ -1,0 +1,151 @@
+<!-- <template>
+    <lightning-card title="Associated Accounts" icon-name="custom:custom53">
+        <div class="slds-m-around_medium">
+            <template if:true={tempAccounts}>
+                <lightning-datatable
+                    key-field="Id"
+                    data={tempAccounts}
+                    columns={columns}
+                    onsave={handleSave}
+                    draft-values={draftValues}>
+                </lightning-datatable>
+            </template>
+            <template if:true={contact.error}>
+                
+                 </template>
+        </div>
+    </lightning-card>
+</template> --> 
+
+<template>
+    
+
+    <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+        <thead>
+            <tr class="">
+                
+                <th class="slds-size_3-of-10" scope="col">
+                    <div class="slds-truncate" title="Name">Name</div>
+                </th>
+                <th class="slds-size_3-of-10" scope="col">
+                    <div class="slds-truncate" title="First Name">Date of birth</div>
+                </th>
+                <th class="slds-size_3-of-10" scope="col">
+                    <div class="slds-truncate" title="Last Name">Phone</div>
+                </th>
+                <th class="slds-size_3-of-10" scope="col">
+                    <div class="slds-truncate" title="Phone">Progress</div>
+                </th>
+                <th class="slds-size_3-of-10" scope="col">
+                    <div class="slds-truncate" title="Phone">Action</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <template for:each = {arrayMember} for:item = "acc" for:index="indexVar">
+                <tr key={acc.key} class="slds-hint-parent">
+                   
+                    <td class="slds-size_3-of-10" data-label="Prospecting">
+                        <div  title="Prospecting">
+                            <lightning-input  class='input-td' type="text"  name="input1"  data-id={indexVar}  value={acc.Name} onchange={setName}></lightning-input>
+                        </div>
+                    </td>
+                    <td class="slds-size_3-of-10" data-label="Prospecting">
+                        <div  title="Prospecting">
+                            <lightning-input  class='input-td' type="date"  name="input2"  data-id={indexVar} value={acc.DOB} onchange={setDOB}> </lightning-input>
+                        </div>
+                    </td>
+                    <td class="slds-size_3-of-10" data-label="Prospecting">
+                        <div  title="Prospecting">
+                            <lightning-input  class='input-td' type="text"  name="input2"  data-id={indexVar} value={acc.Phone} onchange={setPhone}> </lightning-input>
+                        </div>
+                    </td>
+                    <td class="slds-size_3-of-10" data-label="Prospecting">
+                        <div  title="Prospecting">
+                            <lightning-combobox  name="progress"    value={acc.Status}  data-id={indexVar}  placeholder="Select Progress"  options={options} onchange={setProgress}></lightning-combobox>
+                        </div>
+                    </td>
+                    <td class="slds-size_1-of-10" data-label="Prospecting">
+                        <a if:true={acc.Parent} name={indexVar} data-id={indexVar} onclick={addDependent}>
+                            <lightning-icon icon-name="utility:add" alternative-text="add"  size="small"></lightning-icon>
+                        </a>
+                        <a if:false={acc.Parent} name={indexVar} data-id={indexVar} onclick={removeDependent}>
+                                <lightning-icon icon-name="utility:delete" alternative-text="delete"  size="small"></lightning-icon>
+                        </a>
+                    </td>
+                </tr>
+            </template>
+        </tbody>
+    </table>
+
+    <!-- <div class="text-color-black" >
+        
+            <template for:each={arrayMember} for:item="account" for:index="index">
+            <section key={account.Id} class="slds-grid slds-grid_align-spread slds-gutters row slds-m-left_medium slds-m-right_medium" >
+                <div class="align-text-left slds-p-around_x-small" >
+                    <lightning-input  class='input-td' type="text"  name="input1"  data-id={index}  value={account.Name} onchange={setName}></lightning-input>
+                </div> 
+
+                <div class="align-text-left slds-p-around_x-small" >
+                    <lightning-input  class='input-td' type="date"  name="input2"  data-id={index} value={account.DOB} onchange={setDOB}> </lightning-input>
+                                
+                </div> 
+                <div class="align-text-left slds-p-around_x-small" >
+                    <lightning-combobox  name="progress"  label="Status"  value={account.Status}  data-id={index}  placeholder="Select Progress"  options={options} onchange={setProgress}></lightning-combobox>
+                                
+                </div> 
+
+                <div if:true={account.Parent} class="slds-col slds-size_3-of-12 text-align-right slds-p-around_x-small" >
+                    <button data-id={index} class="slds-button open-table-button" onclick={addDependent}>Add member</button>
+                </div>
+               
+                <div if:true={account.Parent} class="slds-col slds-size_3-of-12 text-align-right slds-p-around_x-small" >
+                    <button data-id={index} class="slds-button open-table-button" onclick={showInfoToast}>show toast</button>
+                </div>
+                
+                <div if:false={account.Parent} class="slds-col slds-size_3-of-12 text-align-right slds-p-around_x-small" >
+                    <button data-id={index} class="slds-button open-table-button" onclick={removeDependent}>Remove member</button>
+                </div>
+            </section>
+           
+        </template>
+    </div> -->
+
+    <!-- <template if:true={errorNext}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+          aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+          <div class="slds-modal__container">
+    
+            <header class="slds-modal__header" style="background-color: rgb(199, 22, 22);">
+              <div class="disclaimer-error-Title">Error</div>
+            </header>
+    
+            <div class="slds-modal__content slds-p-around_medium">
+              <div class="slds-grid slds-grid_vertical-align-start">
+                <div class="slds-grid">
+                  <lightning-icon icon-name="utility:error" class="slds-m-bottom_xx-large slds-m-left_x-large custom-error"
+                    alternative-text="error" name="error" size="x-large">
+                  </lightning-icon>
+                </div>
+                <div class="slds-grid" style="margin-left: 5%;">
+                  <p>Error: You must select at least one plan to proceed.</p>
+                </div>
+              </div>
+              <br>
+              <div class="slds-col slds-size_1-of-1">
+                <div class="slds-grid slds-grid_align-center">
+                  <div class="slds-grid slds-grid_align-center slds-wrap slds-button-group-row slds-size_1-of-1 slds-medium-size_8-of-12 slds-p-horizontal_medium">
+                    <div class="omniscript-btn-next slds-size_12-of-12 slds-m-bottom_xx-small slds-medium-size_3-of-12">
+                        <a class="vlocity-btn slds-button slds-button_destructive slds-button_stretch slds-p-around_xx-small slds-size_1-of-1" onclick={closeErrorNext} >OK</a>
+                    </div>          
+                  </div>           
+                </div>
+              </div>
+            </div>
+    
+          </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+      </template> -->
+
+    </template>

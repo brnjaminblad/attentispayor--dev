@@ -1,0 +1,23 @@
+<template>
+  <template if:true={isFirstLoading}>
+    <lightning-spinner
+      alternative-text="Loading"
+      size="medium"
+    ></lightning-spinner>
+  </template>
+  <template if:false={isFirstLoading}>
+    <c-pnm-item-list
+      heading="Licences types"
+      subheading="Scroll to see more data"
+      heading-icon="standard:aggregation_policy"
+      columns={columns}
+      rows={data}
+      hide-checkbox-column="true"
+      is-enabled-infinite-scroll="true"
+      last-page-loaded={lastPageLoaded}
+      page-size={pageSize}
+      onloadmore={handleLoadMore}
+    >
+    </c-pnm-item-list>
+  </template>
+</template>

@@ -1,0 +1,114 @@
+.plancard{
+    margin-bottom: 20px;
+    color: #31393f;
+    background-color: #fff;
+    padding: 25px;
+    box-shadow: 0 2px 3px 0 rgb(173 191 204 / 33%);
+    border-collapse: separate;
+    border-radius: 6px;
+    border: 1px solid #d3e0e8;
+}
+
+.line{
+    font-size: large;
+    text-align: center;
+    font-weight: bold;
+    border-top: solid #00364A;
+}
+
+.emptyBlock{
+    align-content: center;
+    display:inline-block; 
+    width: 47.5%;
+}
+
+.lineBlock{
+    align-content: center;
+    display:inline-block; 
+    width: 5%;
+}
+
+.pricemo {
+    font-size: large;
+    text-align: center; 
+    font-weight: bold;
+    color: black;
+}
+
+.centerText{
+    align-content: center;
+    font-size: medium;
+    text-align: center;
+    font-weight: bold;
+    color: #00364A;
+    text-decoration: underline solid #0973C5;
+}
+
+.planName{
+    font-size: medium;
+    text-align: center;
+    font-weight: bold;
+    color: black;
+}
+
+/*modal*/
+
+.slds-modal__header{
+    display:inline-block;
+    width: 100%;
+    background-color: #F8FBFE;
+}
+
+.modalForm{
+    display:inline-block;
+    width: 100%;
+}
+
+.modalLine { 
+    border-bottom: solid #d2d3d1; 
+
+}
+
+.modalLeftBlock{
+    display:inline-block;
+    width: 50%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    text-align: left;
+}
+
+.modalRightBlock{
+    display:inline-block;
+    width: 50%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    text-align: center;
+}
+
+.modalViewDetails{
+    text-align: center;
+    font-weight: bold;
+    color: #0973C5;
+}
+
+.modalLLeftBlock{
+    display:inline-block;
+    width: 92%;
+    text-align: left;
+}
+
+.modalRRightBlock{
+    display:inline-block;
+    width: 2%;
+    text-align: center;
+}
+
+.modaltxtHeader{
+    font-weight: bold;
+    text-decoration: underline black;
+}
+
+.greenletters{
+    font-weight: bold;
+    color: #0973C5;
+}

@@ -1,0 +1,144 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 11-11-2021
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+    <template if:true={showModal}>
+
+
+<div class="slds-modal slds-fade-in-open slds-backdrop">
+    <div class="slds-modal__container">
+      <!--modal header-->
+
+      <div class="slds-modal__header">
+        <div class="slds-grid slds-grid_vertical-align-start">
+          <div class="slds-col">
+          </div>
+          <div class="slds-col_bump-right">
+            <lightning-button-icon icon-name="utility:print" class="custom-print" size="large" variant="container"
+              onclick={btnprint}>
+            </lightning-button-icon>
+            <lightning-button-icon icon-name="utility:close" alternative-text="Close this window" size="large"
+              variant="container" onclick={closeModal}>
+            </lightning-button-icon>
+
+          </div>
+        </div>
+        <div class="slds-grid slds-grid_vertical-align-start">
+          <div class="slds-col slds-grid_vertical-align-center">
+          </div>
+          <div class="modalRightBlock">
+            {product.Product.Name}<br>
+            <div class="pricemo">${product.Product.Price}/mo</div>
+          </div>
+        </div>
+      </div>
+      <!--modal body-->
+      <div class="slds-modal__content slds-p-around_medium">
+        <div class="modalForm">
+          <!--attributes-->
+          <template for:each = {product.Lista} for:item = "acc" for:index="indexVar">
+            <div if:false={acc.Web} key={acc.Name} class="modalLine">
+              <div class="modalLeftBlock">{acc.Name}</div>
+              <div class="modalRightBlock">{acc.Value}</div>
+            </div>
+
+            <div if:true={acc.Web} class="modalLine" key={acc.Name}>
+              <div class="modalLeftBlock">{acc.Name}</div>
+              <div class="modalRightBlock">
+                <a class="greenletters" href={acc.Value}>{acc.Name}</a>
+                <lightning-icon class="slds-m-left_x-small" icon-name="utility:new_window" size="xx-small"
+                  style="position: relative;"></lightning-icon>
+              </div>
+            </div>
+
+            <!-- <tr key={acc.key} class="slds-hint-parent">
+              
+                <td class="slds-size_3-of-10" data-label="Prospecting">
+                    <div  title="Prospecting">
+                        <lightning-input  class='input-td' type="text"  name="input1"  data-id={indexVar}  value={acc.Name} ></lightning-input>
+                    </div>
+                </td>
+                <td class="slds-size_3-of-10" data-label="Prospecting">
+                  <div  title="Prospecting">
+                      <lightning-input  class='input-td' type="text"  name="input1"  data-id={indexVar}  value={acc.Value} ></lightning-input>
+                  </div>
+              </td>
+              
+            </tr> -->
+        </template>
+
+         <!--coverages-->
+         <template for:each = {product.Coverages} for:item = "acc" for:index="indexVar">
+          <div if:false={acc.Web} key={acc.Name}  class="modalLine">
+            <div class="modalLeftBlock">{acc.Name}</div>
+            <div class="modalRightBlock">{acc.Value}</div>
+          </div>
+
+          <div if:true={acc.Web} class="modalLine" key={acc.Name}>
+            <div class="modalLeftBlock">{acc.Name}</div>
+            <div class="modalRightBlock">
+              <a class="greenletters" href={acc.Value}>{acc.Name}</a>
+              <lightning-icon class="slds-m-left_x-small" icon-name="utility:new_window" size="xx-small"
+                style="position: relative;"></lightning-icon>
+            </div>
+          </div>
+
+          <!-- <tr key={acc.key} class="slds-hint-parent">
+            
+              <td class="slds-size_3-of-10" data-label="Prospecting">
+                  <div  title="Prospecting">
+                      <lightning-input  class='input-td' type="text"  name="input1"  data-id={indexVar}  value={acc.Name} ></lightning-input>
+                  </div>
+              </td>
+              <td class="slds-size_3-of-10" data-label="Prospecting">
+                <div  title="Prospecting">
+                    <lightning-input  class='input-td' type="text"  name="input1"  data-id={indexVar}  value={acc.Value} ></lightning-input>
+                </div>
+            </td>
+            
+          </tr> -->
+      </template>
+
+     
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+          <!--modal body-->
+
+          
+
+          <!-- <template for:each = {product.Coverages} for:item = "acc" for:index="indexVar">
+            <tr key={acc.key} class="slds-hint-parent">
+              
+                <td class="slds-size_3-of-10" data-label="Prospecting">
+                    <div  title="Prospecting">
+                        <lightning-input  class='input-td' type="text"  name="input1"  data-id={indexVar}  value={acc.Name} ></lightning-input>
+                    </div>
+                </td>
+                <td class="slds-size_3-of-10" data-label="Prospecting">
+                  <div  title="Prospecting">
+                      <lightning-input  class='input-td' type="text"  name="input1"  data-id={indexVar}  value={acc.Value} ></lightning-input>
+                  </div>
+              </td>
+              
+            </tr>
+        </template> -->
+
+          
+
+
+</div>
+</div>
+        
+    </template>
+
+
+</template>

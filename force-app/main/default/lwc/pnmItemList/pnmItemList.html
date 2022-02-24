@@ -1,0 +1,41 @@
+<!-- sldsValidatorIgnore -->
+<template>
+  <template if:true={heading}>
+    <div class="slds-page-header slds-m-bottom_large">
+      <div class="slds-page-header__row">
+        <div class="slds-page-header__col-title">
+          <div class="slds-media">
+            <div class="slds-media__figure">
+              <lightning-icon icon-name={headingIcon}></lightning-icon>
+            </div>
+            <div class="slds-media__body">
+              <div class="slds-page-header__name">
+                <div class="slds-page-header__name-title">
+                  <h1 class="slds-page-header__title slds-truncate">
+                    {heading}
+                  </h1>
+                </div>
+              </div>
+              <template if:true={subheading}>
+                <p class="slds-page-header__name-meta">{subheading}</p>
+              </template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <div class={containerComputedClasses}>
+    <lightning-datatable
+      data={rows}
+      columns={columns}
+      key-field="id"
+      hide-checkbox-column={hideCheckboxColumn}
+      enable-infinite-loading={isEnabledInfiniteScroll}
+      is-loading={isLoadingPage}
+      onloadmore={triggerLoadMoreEvent}
+    >
+    </lightning-datatable>
+  </div>
+</template>

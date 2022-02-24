@@ -1,0 +1,120 @@
+.plancard{
+    border: 1px solid #cccccc;
+    border-radius: 2px;
+    margin-bottom: 1%;
+}
+
+.block1-3{
+    display:inline-block; 
+    width: 33%;
+}
+
+.boldletters{
+    font-weight: bold;
+    color: black;
+}
+
+.sectionDetails{
+    display:inline-block; 
+    width: 70%;
+}
+
+.sectionbtn{
+    display:inline-block; 
+    width:30%;
+}
+
+.verticalLine {
+    border-left: solid #547919;
+}
+
+.verticalLine2 { 
+    border-left: solid rgb(146, 194, 74);
+}
+
+.planname{
+    position: relative;
+    top: 10%;
+    font-size: large;
+    text-align: left; 
+    font-weight: bold;
+    color: black;
+    margin-top: 1%;
+    margin-bottom: 2%;
+}
+
+.pricemo {
+    font-size: large;
+    text-align: center; 
+    font-weight: bold;
+}
+
+.plandetails{
+    text-align: left;
+    font-weight: bold;
+    color: #436BA6;
+    text-decoration: underline solid rgb(146, 194, 74);
+}
+
+.custom-btn{
+    --sds-c-button-radius-border: 30px;
+    --sds-c-button-brand-color-background: rgb(146, 194, 74);
+    --sds-c-button-brand-color-background-hover: rgb(129, 168, 70);  
+    --sds-c-button-brand-color-border: rgb(146, 194, 74);
+    --sds-c-button-brand-color-border-hover: rgb(129, 168, 70); 
+}
+
+/*modal*/
+.slds-modal__header{
+    display:inline-block;
+    width: 100%;
+    background-color: #F8FBFE;
+}
+
+.modalForm{
+    display:inline-block;
+    width: 100%;
+}
+
+.modalLine { 
+    border-bottom: solid #d2d3d1; 
+
+}
+
+.modalLeftBlock{
+    display:inline-block;
+    width: 50%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.modalRightBlock{
+    display:inline-block;
+    width: 50%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    text-align: center;
+}
+
+.modalViewDetails{
+    text-align: center;
+    font-weight: bold;
+    color: #6A9623;
+}
+
+.modalLLeftBlock{
+    display:inline-block;
+    width: 92%;
+    text-align: left;
+}
+
+.modalRRightBlock{
+    display:inline-block;
+    width: 2%;
+    text-align: center;
+}
+
+.modaltxtHeader{
+    font-weight: bold;
+    text-decoration: underline black;
+}

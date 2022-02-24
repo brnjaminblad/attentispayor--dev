@@ -1,0 +1,22 @@
+<template>
+    <div class="via-slds">
+        <!-- spinner section shows while the data loads-->
+        <div class="slds-is-relative">
+            <vlocity_ins-spinner
+                if:false={isLoaded}
+                variant="brand"
+                size="medium"
+                alternative-text="loading"
+            ></vlocity_ins-spinner>
+        </div>
+        <!-- wrapping the cards in a lightning-card to add a stylized container -->
+        <lightning-card  title="My Title here">
+                <lightning-button label="Custom Button" slot="actions">
+                </lightning-button>
+                <p class="slds-p-horizontal_small">
+                    Hello World!!!
+                    <slot></slot>
+                </p>
+        </lightning-card>
+    </div>
+</template>

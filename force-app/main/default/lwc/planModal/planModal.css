@@ -1,0 +1,71 @@
+.slds-modal__header{
+    display:inline-block;
+    width: 100%;
+    background-color: #F8FBFE;
+    padding: 1.2rem;
+}
+
+.modalForm{
+    display:inline-block;
+    width: 100%;
+}
+
+.modalLine { 
+    border-bottom: solid #d2d3d1;
+}
+
+.modalLeftBlock{
+    display:inline-block;
+    width: 50%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.modalRightBlock{
+    display:inline-block;
+    width: 50%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    text-align: center;
+}
+
+.modalViewDetails{
+    text-align: center;
+    font-weight: bold;
+    color: #6A9623;
+}
+
+.modalLLeftBlock{
+    display:inline-block;
+    width: 92%;
+    text-align: left;
+}
+.modalRRightBlock{
+    display:inline-block;
+    width: 2%;
+    text-align: center;
+}
+
+.modaltxtHeader{
+    display:inline-block;
+    width: 100%;
+    font-weight: bold;
+    text-decoration: underline black;
+    margin-bottom: 2%;
+    margin-top: 2%;
+}
+.modalEmptyBlock{
+    display:inline-block;
+    width: 100%;
+}
+
+.boldletters{
+    font-weight: bold;
+    color: black;
+    margin-left: 2%;
+}
+
+.greenletters{
+    font-weight: bold;
+    color: rgb(146, 194, 74);
+}

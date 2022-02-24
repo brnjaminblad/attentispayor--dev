@@ -1,0 +1,149 @@
+<template>
+    <div if:false={isHidden} class={containerClasses}>
+        <div if:false={isLabelHidden} class={labelContainerClasses}>
+            <div class={labelClasses}>{attribute.label}
+                <span if:true={attribute.max}> ({attribute.min} - {attribute.max})</span>
+                <span class="nds-text-body_small" if:true={inDebugMode}>({uniqueCode})</span>
+            </div>
+            <template for:each={messages} for:item="message">
+                <div key={message.id} class={message.styles}>
+                    {message.message}
+                </div>
+            </template>
+        </div>
+        <div class={valueContainerClasses}>
+            <template if:true={isReadonly}>
+                <div class="vloc-ins-admin-text">{displayValue}</div>
+            </template>
+            <template if:false={isReadonly}>
+                <template if:true={isInputNumber}>
+                    <vlocity_ins-masked-input if:true={isCurrency} disabled={isDisabled} imask={imaskCurrencyAttributes} theme={theme} value={userValues}
+                        onblur={handleValueChange}></vlocity_ins-masked-input>
+                    <span if:true={isPercentage} class="vloc-ins-align-items">
+                        <vlocity_ins-masked-input imask={imaskNumberAttributes} disabled={isDisabled} theme={theme} value={userValues} onblur={handleValueChange}>
+                        </vlocity_ins-masked-input>%
+                    </span>
+                    <vlocity_ins-masked-input if:true={isPlainNumber} imask={imaskNumberAttributes} disabled={isDisabled} theme={theme}
+                        value={userValues} onblur={handleValueChange}></vlocity_ins-masked-input>
+                </template>
+                <template if:true={isInputText}>
+                    <vlocity_ins-input disabled={isDisabled} type="text" value={userValues} theme={theme}
+                        onchange={handleValueChange}></vlocity_ins-input>
+                </template>
+                <template if:true={isInputTextarea}>
+                    <vlocity_ins-input disabled={isDisabled} type="textarea" value={userValues} theme={theme}
+                        onchange={handleValueChange}></vlocity_ins-input>
+                </template>
+                <template if:true={isInputCheckbox}>
+                    <vlocity_ins-input disabled={isDisabled} type="checkbox" checked={userValues} theme={theme}
+                        onchange={handleValueChange}></vlocity_ins-input>
+                </template>
+                <template if:true={isInputDropdown}>
+                    <vlocity_ins-combobox disabled={isDisabled} options={attribute.values} value={userValues} theme={theme}
+                        onchange={handleValueChange} variant="label-hidden"></vlocity_ins-combobox>
+                </template>
+                <template if:true={isInputRange}>
+                    <div class="nds-is-relative nds-form-element">
+                        <div class="nds-form-element__control nds-form-container">
+                            <div class="nds-slider">
+                                <input disabled={isDisabled} type="range" min={attribute.min} max={attribute.max}
+                                    class="nds-slider__range" onchange={handleValueChange} value={userValues}>
+                                <span class="nds-slider__value nds-p-right_none">{userValues}<span
+                                        if:true={isPercentage}>%</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                <template if:true={isDate}>
+                    <vlocity_ins-date-picker disabled={isDisabled} theme={theme} value={userValues} format={dateFormat} output-format="MM/DD/YYYY"
+                        onchange={handleValueChange}></vlocity_ins-date-picker>
+                </template>
+                <template if:true={isDateTime} class="nds-grid nds-grid_vertical-align-center">
+                    <vlocity_ins-datetime-picker disabled={isDisabled} theme={theme} value={userValues} date-format={dateFormat} time-format="hh:mm A" output-format="MM/DD/YYYY HH:mm:ss"
+                        onchange={handleValueChange} date-placeholder="" time-placeholder="" date-label="" time-label=""></vlocity_ins-datetime-picker>
+                </template>
+                <template if:true={isInputMultiSelectDropdown}>
+                    <div class="nds-form-element nds-form-container">
+                        <div class="nds-form-element__control">
+                            <div class="nds-combobox_container">
+                                <div class={comboboxDropdownClasses} onclick={toggleMultiDropdown}>
+                                    <div class="nds-combobox__form-element nds-input-has-icon nds-input-has-icon_right"
+                                        role="none">
+                                        <input disabled={isDisabled}
+                                            class="nds-input nds-combobox__input nds-combobox__input-value"
+                                            value={multiSelectLabel} type="text" role="textbox" />
+                                        <span
+                                            class="nds-icon_container nds-icon-utility-down nds-input__icon nds-input__icon_right">
+                                            <vlocity_ins-icon icon-name="utility:chevrondown"
+                                                extraclass="nds-icon nds-icon-text-default" size="xx-small" theme={theme}>
+                                            </vlocity_ins-icon>
+                                        </span>
+                                    </div>
+                                    <div
+                                        class="nds-dropdown nds-dropdown_fluid nds-dropdown_left vloc-ins-attribute-component-dropdown-items">
+                                        <ul class="nds-listbox nds-listbox_vertical" role="menu">
+                                            <template for:each={attribute.values} for:item="value">
+                                                <li role="presentation" key={value.id} class="nds-listbox__item"
+                                                    onclick={handleValueChange} data-value={value.value}>
+                                                    <div id={value.id}
+                                                        class="nds-is-selected nds-media nds-listbox__option nds-listbox__option_plain nds-media_small"
+                                                        role="option">
+                                                        <span if:true={value.checked} class="nds-media__figure">
+                                                            <vlocity_ins-icon icon-name="utility:check" size="xx-small"
+                                                                extraclass="nds-listbox__icon-selected" theme={theme}></vlocity_ins-icon>
+                                                        </span>
+                                                        <span if:false={value.checked}
+                                                            class="nds-media__figure vloc-ins-icon-hide">
+                                                            <vlocity_ins-icon icon-name="utility:check" size="xx-small" theme={theme}>
+                                                            </vlocity_ins-icon>
+                                                        </span>
+                                                        <span class="nds-media__body">
+                                                            <span class="nds-truncate">{value.label}</span>
+                                                        </span>
+                                                    </div>
+                                                </li>
+                                            </template>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                <template if:true={isInputMultiSelectCheckbox}>
+                    <fieldset class="nds-form-element nds-form-container">
+                        <div class="nds-form-element__control">
+                            <template for:each={attribute.values} for:item="value">
+                                <span class="nds-checkbox" key={value.id}>
+                                    <input disabled={isDisabled} type="checkbox" name="checkboxOptions"
+                                        id={value.checkboxId} value={value.value} checked={value.checked}
+                                        onclick={handleValueChange} />
+                                    <label class="nds-checkbox__label" for={value.checkboxId}>
+                                        <span class="nds-checkbox_faux"></span>
+                                        <span class="nds-form-element__label">{value.label}</span>
+                                    </label>
+                                </span>
+                            </template>
+                        </div>
+                    </fieldset>
+                </template>
+                <template if:true={isInputRadio}>
+                    <div class="nds-max-small-size_5-of-12 nds-is-relative">
+                        <vlocity_ins-radio-group disabled={isDisabled} name={uniqueOptionsName} value={userValues}
+                        options={attribute.values} theme={theme} onchange={handleValueChange}></vlocity_ins-radio-group>
+                    </div>
+                </template>
+            </template>
+        </div>
+    </div>
+    <div if:true={isLabelHidden} class="nds-size_1-of-1">
+        <template for:each={messages} for:item="message">
+            <div key={message.id} class={message.styles}>
+                {message.message}
+            </div>
+        </template>
+    </div>
+    <template if:true={inDebugMode}>
+        <vlocity_ins-ins-rules-debugger attribute={attribute} rules-debug={rulesDebug}></vlocity_ins-ins-rules-debugger>
+    </template>
+</template>

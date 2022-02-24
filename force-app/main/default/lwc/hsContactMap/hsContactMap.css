@@ -1,0 +1,21 @@
+.img {
+width: 80%;
+min-width: none;
+min-height: none;
+box-align: left;
+}
+
+.imgsizing {
+    --sds-c-map-max-height:150px;
+    --sds-c-map-max-width:150px;
+    --sds-c-map-min-height:none;
+    --sds-c-map-min-width:none;
+
+ }
+
+ .imgtwo {
+    box-sizing: border-box;
+width: 80%;
+border: solid #5B6DCD 10px;
+padding: 5px;
+    }

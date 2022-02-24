@@ -1,0 +1,34 @@
+.borderTop{
+    border-top: 2px solid grey;
+    border-bottom: 2px solid grey;
+    border-left: 2px solid grey;
+}
+
+.borderMed{
+    border-left: 2px solid grey;
+}
+
+.borderBottom{
+    border-top: 2px solid grey;
+    border-bottom: 2px solid grey;
+    border-left: 2px solid grey;
+}
+
+.font{
+    color: black;
+    font-weight: bold;
+}
+
+.alignCenter{
+    color: black;
+    text-align: center;
+}
+
+.alignLeft{
+    text-align: left;
+}
+
+.vertical-center {
+    position: absolute;
+    top: 50%;
+  }

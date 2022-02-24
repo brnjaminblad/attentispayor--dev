@@ -1,0 +1,308 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 10-28-2021
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+  <div>
+    <template for:each={plansOrdered} for:item="plan" for:index="index">
+      <div key={plan.Id}>
+        <div class="plancard">
+          <div class="planName">{plan.Name}</div>
+          <div><br></div>
+          <div class="emptyBlock"></div>
+          <div class="lineBlock">
+            <div class="line"></div>
+          </div>
+          <div><br></div>
+          <div class="pricemo">${plan.Price}/mo.</div>
+          <div><br></div>
+          <div class="centerText">
+            <lightning-button data-id={index} class="plandetails" variant="base" label="View Plan Details"
+              onclick={showModal}>
+            </lightning-button>
+          </div>
+
+        </div>
+      </div>
+    </template>
+
+    <template if:true={openModal}>
+      <div class="slds-modal slds-fade-in-open slds-backdrop">
+        <div class="slds-modal__container">
+          <!--modal header-->
+
+          <div class="slds-modal__header">
+            <lightning-button-icon icon-name="utility:close" alternative-text="Close this window" size="large"
+              variant="bare-inverse" onclick={closeModal} class="slds-modal__close">
+            </lightning-button-icon>
+
+            <div class="modalLLeftBlock"></div>
+            <div class="modalRRightBlock">
+              <!--<div class="slds-p-around_medium lgc-bg">-->
+              <lightning-button-icon icon-name="utility:print" class="slds-m-right_xx-small" variant="container"
+                alternative-text="Print" name="print" click="btnprint">
+              </lightning-button-icon>
+
+            </div>
+            <div class="modalLeftBlock">
+              <div class="modalViewDetails">View Details</div>
+            </div>
+            <div class="modalRightBlock"><br>
+              {product.Name}<br>
+              <div class="pricemo">${product.Price}/mo</div>
+            </div>
+          </div>
+          <!--modal body-->
+          <div class="slds-modal__content slds-p-around_medium">
+            <div class="modalForm">
+              <!--attributes-->
+              <ul>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Primary Care Physician Visit</div>
+                  <div class="modalRightBlock">{product.PrimaryCarePhysicianVisit}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Specialist Office Visit</div>
+                  <div class="modalRightBlock">{product.SpecialistOfficeVisit}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Medical Deductible</div>
+                  <div class="modalRightBlock">{product.MedicalDeductible}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Prescription Drug Coverage</div>
+                  <div class="modalRightBlock">{product.PrescriptionDrugCoverage}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Dental Coverage</div>
+                  <div class="modalRightBlock">{product.DentalCoverage}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">TeleHealth</div>
+                  <div class="modalRightBlock">{product.TeleHealth}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Find a Doctor</div>
+                  <div class="modalRightBlock">
+                    <a class="greenletters" href={product.FindaDoctor}>Find a Doctor</a>
+                  </div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Rx Details</div>
+                  <div class="modalRightBlock">
+                    <a class="greenletters" href={product.RxDetails}>Rx Details</a>
+                  </div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Evidence of Coverage - English</div>
+                  <div class="modalRightBlock">
+                    <a class="greenletters" href={product.EvidenceofCoverageEnglish}>Evidence of Coverage - English</a>
+                  </div>
+                </div>
+              </ul>
+              <!--Benefits-->
+              <div class="modaltxtHeader">Benefits</div><br>
+              <div class="modalLine"></div>
+              <ul>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Urgent Care</div>
+                  <div class="modalRightBlock">{product.UrgentCareMEDICAREBENEFITS}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">PCP Required</div>
+                  <div class="modalRightBlock">{product.PCPRequiredMEDICAREBENEFITS}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Referral Required</div>
+                  <div class="modalRightBlock">{product.ReferralRequiredMEDICAREBENEFITS}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">24-Hour Nurse Hotline</div>
+                  <div class="modalRightBlock">{product.HourNurseHotlineMEDICAREBENEFITS}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Inpatient Hospital Coverage</div>
+                  <div class="modalRightBlock">{product.InpatientHospitalCoverageMEDICAREBENEFITS}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Home Health Care</div>
+                  <div class="modalRightBlock">{product.HomeHealthCareMEDICAREBENEFITS}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Eyewear</div>
+                  <div class="modalRightBlock">{product.EyewearMEDICAREBENEFITS}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Hearing Aid</div>
+                  <div class="modalRightBlock">{product.HearingAidMEDICAREBENEFITS}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Skilled Nursing Facility (SNF)</div>
+                  <div class="modalRightBlock">{product.SkillednursingfacilitySNFMEDICAREBENEFITS}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Mental Health Services - Inpatient Visit</div>
+                  <div class="modalRightBlock">{product.MentalHealthServicesInpatientVisitMEDICAREBENEFITS}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Emergency Room</div>
+                  <div class="modalRightBlock">{product.EmergencyRoomMEDICAREBENEFITS}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Chiropractic Care</div>
+                  <div class="modalRightBlock">{product.ChiropracticCareMEDICAREBENEFITS}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Medical Equipment/Supplies</div>
+                  <div class="modalRightBlock">{product.MedicalEquipmentSuppliesMEDICAREBENEFITS}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Ambulance Services</div>
+                  <div class="modalRightBlock">{product.AmbulanceServicesMEDICAREBENEFITS}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Podiatry Services (Foot Care)</div>
+                  <div class="modalRightBlock">{product.PodiatryServicesFootCareMEDICAREBENEFITS}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Over-The-Counter (OTC) Items</div>
+                  <div class="modalRightBlock">{product.OverTheCounterOTCItemsMEDICAREBENEFITS}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Acupuncture</div>
+                  <div class="modalRightBlock">{product.AcupunctureMEDICAREBENEFITS}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Maximum Out of Pocket</div>
+                  <div class="modalRightBlock">{product.MaximumOutofPocketMEDICAREBENEFITS}</div>
+                </div>
+              </ul>
+              <!--Drug Coverage-->
+              <div class="modaltxtHeader">Drug Coverage</div><br>
+              <div class="modalLine"></div>
+              <ul>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Initial Coverage Limit/Catastrophic Limit</div>
+                  <div class="modalRightBlock">{product.InitialCoverageLimitCatastrophicLimitMEDIDRUGCOV}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Pharmacy Deductible</div>
+                  <div class="modalRightBlock">{product.PharmacyDeductibleMEDIDRUGCOV}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">All Formulary Drugs</div>
+                  <div class="modalRightBlock">{product.AllFormularyDrugsMEDIDRUGCOV}</div>
+                </div>
+              </ul>
+              <!--Preferred Retail (30-day-supply)-->
+              <div class="modaltxtHeader">Preferred Retail (30-day-supply)</div><br>
+              <div class="modalLine"></div>
+              <ul>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Tier 1 (Preferred Generic)</div>
+                  <div class="modalRightBlock">{product.TierPreferredGenericPRFRRDRTLt}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Tier 2 (Generic)</div>
+                  <div class="modalRightBlock">{product.TierGenericPRFRRDRTLt}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Tier 3 (Preferred Brand)</div>
+                  <div class="modalRightBlock">{product.TierPreferredBrandPRFRRDRTLt}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Tier 4 (Non-Preferred Drug)</div>
+                  <div class="modalRightBlock">{product.TierNonPreferredDrugPRFRRDRTLt}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Tier 5 (Specialty)</div>
+                  <div class="modalRightBlock">{product.TierSpecialtyPRFRRDRTLt}</div>
+                </div>
+              </ul>
+              <!--Standard Retail (30-day-supply)-->
+              <div class="modaltxtHeader">Standard Retail (30-day-supply)</div><br>
+              <div class="modalLine"></div>
+              <ul>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Tier 1 (Preferred Generic)</div>
+                  <div class="modalRightBlock">{product.TierPreferredGenericSTNDRDRTLt}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Tier 2 (Generic)</div>
+                  <div class="modalRightBlock">{product.TierGenericSTNDRDRTLt}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Tier 3 (Preferred Brand)</div>
+                  <div class="modalRightBlock">{product.TierPreferredBrandSTNDRDRTLt}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Tier 4 (Non-Preferred Drug)</div>
+                  <div class="modalRightBlock">{product.TierNonPreferredDrugSTNDRDRTLt}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Tier 5 (Specialty)</div>
+                  <div class="modalRightBlock">{product.TierSpecialtySTNDRDRTLt}</div>
+                </div>
+              </ul>
+              <!--Mail Order (30-day-supply)-->
+              <div class="modaltxtHeader">Mail Order (30-day-supply)</div><br>
+              <div class="modalLine"></div>
+              <ul>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Tier 1 (Preferred Generic)</div>
+                  <div class="modalRightBlock">{product.TierPreferredGenericMLORDRt}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Tier 2 (Generic)</div>
+                  <div class="modalRightBlock">{product.TierGenericMLORDRt}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Tier 3 (Preferred Brand)</div>
+                  <div class="modalRightBlock">{product.TierPreferredBrandMLORDRt}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Tier 4 (Non-Preferred Drug)</div>
+                  <div class="modalRightBlock">{product.TierNonPreferredDrugMLORDRt}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Tier 5 (Specialty)</div>
+                  <div class="modalRightBlock">{product.TierSpecialtyMLORDRt}</div>
+                </div>
+              </ul>
+              <!--Mail Order (90-day-supply)-->
+              <div class="modaltxtHeader">Mail Order (90-day-supply)</div><br>
+              <div class="modalLine"></div>
+              <ul>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Tier 1 (Preferred Generic)</div>
+                  <div class="modalRightBlock">{product.TierPreferredGenericMLORDRn}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Tier 2 (Generic)</div>
+                  <div class="modalRightBlock">{product.TierGenericMLORDRn}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Tier 3 (Preferred Brand)</div>
+                  <div class="modalRightBlock">{product.TierPreferredBrandMLORDRn}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Tier 4 (Non-Preferred Drug)</div>
+                  <div class="modalRightBlock">{product.TierNonPreferredDrugMLORDRn}</div>
+                </div>
+                <div class="modalLine">
+                  <div class="modalLeftBlock">Tier 5 (Specialty)</div>
+                  <div class="modalRightBlock">{product.TierSpecialtyMLORDRn}</div>
+                </div>
+              </ul>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+
+  </div>
+</template>

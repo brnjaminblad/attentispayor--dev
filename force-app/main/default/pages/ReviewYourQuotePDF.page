@@ -1,0 +1,312 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 11-15-2021
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<apex:page renderAs="pdf" showHeader="false" applyHtmlTag="false" controller="ReviewYourQuotePDFController">
+    
+    <head>
+        <title>Quote PDF</title>
+         <style type="text/css" media="print">
+            @page:first{
+                @top-right { content: element(header2); }
+                @top-left{ content: element(header3); }
+                @bottom-center{ content: {!IF(letter == 'Standard','','element(footer)')}; }
+            }
+            @page{
+                margin: 1.0in 0.65in 1.0in .6in;
+                @top-left{ content: element(header1); }
+                @bottom-center{ content: element(footer); }
+                @bottom-corner-right{ content: "Page " counter(page) " of " counter(pages);}
+            }
+            @page last{
+                @top-left{ content: element(header1); }
+            }
+            div.header1{position: running(header1); }
+            div.header2{position: running(header2); }
+            div.header3{position: running(header3); }
+            div.footer{display: block; padding: 0px 5px 5px 0px; position: running(footer); margin-top:0em; border-bottom:1px solid black;}
+            #lastpage{page:last}
+            body{
+                background:#fff;
+                color: #343741;
+                font-size: 12px;
+                font-weight:300;
+                font-family:'Open Sans', Arial, sans-serif;
+            }
+            .disclaimer{
+                padding: 0;    
+                padding-left: 10px;     
+                margin-left: 0px;
+
+            }
+            .disclaimer li{
+                padding-bottom: 10px;
+            }
+            td{
+                font-size: 11px;
+            }
+            .comparison tr{
+                margin-bottom: 10px;
+                vertical-align: text-top;
+            }
+            .text{
+                width: 100%;
+                text-align: justify;
+            }
+            .header-table-1{
+                width: 100%;   
+            }
+            .header-table-1 tr {
+                line-height: 1.1em;
+            }
+            .header-table-1 img {
+                margin-bottom:13px;
+                width:auto;
+            }
+            .plan-c-info{
+                width: 100%;
+                border: 1px solid #d8dde6;
+                border-radius: 10px;
+                margin-right: 15px;
+                margin-bottom: 10px;
+            }
+            .cci-und-line{
+                width:50px; 
+                height:3px; 
+                background-color:#034370;
+                margin-top:-18px;
+            }
+            .eh-und-line{
+                width:50px; 
+                height:3px; 
+                background-color:#034370;
+                margin-top:-18px;
+            }
+            .margin-c{
+                margin-top: 0px;
+                margin-left: 12px;
+                margin-right: 12px;
+                margin-bottom: 5px;
+            }  
+            .header2 p{
+                font-size: 20px;
+                float: right;
+                padding-right: 10px;
+            }
+            .familyReview{
+                width: 100%;
+            }
+            .familyReview tr{
+                vertical-align:text-top;
+            }
+
+            .tableCustom{
+                width:100%;
+                border-collapse: collapse;
+                text-align:center;
+            }
+
+            .tableCustom tr td, .tableCustom tr th{
+                border:0.5px solid;
+            }
+
+            .medicalPremiumTable {
+                margin-bottom: 10px;
+            }
+
+            .rightAllign{
+                text-align: right;
+            }
+
+            .tb-compare-plans {
+                width: 650px;
+                display: relative;
+                -fs-table-paginate: paginate;
+                border-spacing: 0;
+                margin-top: 15px;
+                max-width: 650px !important;
+            }
+
+            .tb-compare-plans td, .tb-compare-plans th{
+                border: 0.25px solid black;
+                padding: 4px;
+            }
+            .subtotal-Row{
+                font-weight:bold;
+                background-color: #C5C5C5
+            }
+            .total-Row{
+                font-weight:bold;
+                background-color: #A2A1A1
+            }
+        </style> 
+    </head> 
+
+    <!--Logo-->
+    <img src="{!$Resource.AttentisLogo}" width="auto" height="40" align="left"/>
+    <p style="text-align: right; font-size: 16px;">Medicare Advantage Quote</p>  
+
+    <!--Develop for-->
+    <div style="border: solid 1px #d8dde6; margin-bottom: 5px; margin-top: 40px;">
+            <table style="margin-bottom: 10px; width:100%;">
+                <tr><th style="padding-left: 10px; font-size: 14px; padding-top: 5px;"><b><u>Developed For</u></b></th></tr>
+                <tr>
+                    <td>
+                        <apex:outputText rendered="{!IF(quoteRec.AccountId != null, true, false)}" value="{!quoteRec.Account.Name}" style="margin-left: 10px; font-family: sans-serif; font-size: 12px;"/>
+                        <apex:outputText rendered="{!IF(quoteRec.AccountId == null, true, false)}" value="FirstName LastName" style="margin-left: 10px; font-family: sans-serif; font-size: 12px;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <apex:outputText rendered="{!IF(AND(cityAddress != null, stateAddress != null, postalCodeAddress != null), true, false)}" value="{!cityAddress}, {!stateAddress}, {!postalCodeAddress}" style="margin-left: 10px; font-family: sans-serif; font-size: 12px;"/>
+                        <apex:outputText rendered="{!IF(quoteRec.AccountId == null, true, false)}" value="City, State, ZipCode" style="margin-left: 10px; font-family: sans-serif; font-size: 12px;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <apex:outputText rendered="{!IF(quoteRec.AccountId != null, true, false)}" value="{!quoteRec.Account.County__c}" style="margin-left: 10px; font-family: sans-serif; font-size: 12px;"/>
+                        <apex:outputText rendered="{!IF(quoteRec.AccountId == null, true, false)}" value="County: county" style="margin-left: 10px; font-family: sans-serif; font-size: 12px;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;"><b>Current Date:</b>
+                        <apex:outputText value="{!MONTH(TODAY())}/{!DAY(TODAY())}/{!YEAR(TODAY())}" style="margin-left: 10px; font-family: sans-serif; font-size: 12px;"/>
+                    </td>
+                </tr>
+            </table>
+    </div>
+    
+    <div style="border: solid 1px #d8dde6; margin-bottom: 5px;">
+        <table style="margin-bottom: 10px; width:100%;">
+            <tr><td style="padding-left: 5px; font-size: 14px; font-family: sans-serif; padding-top: 5px; margin-left: -2px;">Based on your election period, your potential enrollment dates are:</td></tr>
+            <tr><td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;"><b>Open Enrollment:</b> January 1, {!YEAR(TODAY()) + 1}</td></tr>
+            <tr><td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;"><b>Special Election Period:</b> This date may change but is generally the first day of the next month.</td></tr>
+            <tr><td style="padding-left: 10px; font-size: 12px; font-family: sans-serif; vertical-align:top;"><b>New to Medicare:</b> If you enroll in the first three months before the month you get Medicare, your 
+                effective date is the first day of the month you get Medicare.</td></tr>
+      </table> 
+    </div>
+
+    <!--Quoted Plans-->
+    <apex:outputPanel >
+        <div id="centerpage" class="plan-c-info">
+            <div class="margin-c">
+                <p style="font-size: 16px; margin-top: 5px;"><apex:outputText >Quoted Plans</apex:outputText></p>
+                <apex:outputText ><p style="margin-left: 5px; margin-bottom: 5px; margin-top: 5px;">For a more detailed explanation of services covered by this plan, as well as specific copayments, deductibles and coinsurance that may apply, please refer to the benefit summary. Please see important information on the disclaimer page of this proposal.</p></apex:outputText>
+                <apex:variable value="{!qlisMedicalSize}" var="qliListSize"/> 
+                <apex:variable value="{!0}" var="indexItem"/>
+                <apex:variable value="{!0}" var="indexItemMonthly"/>
+                <apex:variable value="{!0}" var="countProd"/>
+                <apex:variable value="{!0}" var="countRow"/>
+                <apex:variable value="{!0}" var="indexAttrCOrder"/>
+                <apex:repeat value="{!qliList}" var="qlims" rows="{!repeatMedicalPlans}">
+                    <apex:variable value="{!0}" var="attrIndex"/>
+                    <table class="tb-compare-plans" style="width: 650px;">
+                        <thead style="display: table-header-group;">
+                            <apex:variable value="{!0}" var="indexProd" />
+                            <tr style="page-break-inside:avoid; vertical-align:text-bottom;">
+                                <th style="font-size: 12px;">Plan Name</th>
+                                <apex:repeat value="{!qliList}" var="qlim" rows="4"> 
+                                    <apex:outputText rendered="{!IF(indexItem < qliListSize, true, false)}">
+                                        <apex:outputText ><th style="color: #034370; font-size:12px;">{!qliList[indexItem].vlocity_ins__ProductName__c}</th></apex:outputText>
+                                    </apex:outputText>
+                                    <apex:variable value="{!indexItem + 1}" var="indexItem"/>
+                                </apex:repeat>
+                            </tr>
+                        </thead>
+                        <tr style="page-break-inside:avoid; vertical-align:text-bottom;">
+                            <th style="width:150px; font-size: 12px;">Monthly Premium</th>
+                            <apex:repeat value="{!qliList}" var="qlim" rows="4">
+                                <apex:outputText rendered="{!IF(indexItemMonthly < qliListSize, true, false)}">
+                                        <td><apex:outputText value="{0, number,$###,###,##0.00}">
+                                                <apex:param value="{!qliList[indexItemMonthly].UnitPrice}" />
+                                            </apex:outputText>/mo</td>
+                                </apex:outputText>
+                                <apex:variable value="{!indexItemMonthly + 1}" var="indexItemMonthly" />
+                            </apex:repeat>
+                        </tr>
+                        <apex:outputText ><!--attributes-->
+                            <apex:repeat value="{!attributeCustomOrder}" var="att">    
+                                <tr style="page-break-inside:avoid; vertical-align:text-bottom;">
+                                    <td style="width:150px; font-size:12x;"><apex:outputText value="{!covCode[att]}"></apex:outputText></td>
+                                    <apex:variable value="{!0}" var="indexAttrCOrder" rendered="{!IF(countRow == 0, true, false)}"/>
+                                    <apex:variable value="{!4}" var="indexAttrCOrder" rendered="{!IF(countRow >= 1, true, false)}"/>
+                                    <apex:variable value="{!8}" var="indexAttrCOrder" rendered="{!IF(countRow >= 2, true, false)}"/>
+                                    <apex:variable value="{!12}" var="indexAttrCOrder" rendered="{!IF(countRow >= 3, true, false)}"/>
+                                    <apex:variable value="{!16}" var="indexAttrCOrder" rendered="{!IF(countRow >= 4, true, false)}"/>
+                                    <apex:variable value="{!20}" var="indexAttrCOrder" rendered="{!IF(countRow >= 5, true, false)}"/>
+                                    <apex:variable value="{!24}" var="indexAttrCOrder" rendered="{!IF(countRow >= 6, true, false)}"/>
+                                    <apex:variable value="{!28}" var="indexAttrCOrder" rendered="{!IF(countRow >= 7, true, false)}"/>
+                                    <apex:variable value="{!32}" var="indexAttrCOrder" rendered="{!IF(countRow >= 8, true, false)}"/>
+                                    <apex:variable value="{!36}" var="indexAttrCOrder" rendered="{!IF(countRow >= 9, true, false)}"/>
+                                    <apex:repeat value="{!qliList}" var="qlim" rows="4">  
+                                        <apex:outputText rendered="{!IF(indexAttrCOrder < qliListSize, true, false)}">
+                                            <td style="font-size:12x;">
+                                                <apex:repeat value="{!attributeCustomOrder[attrIndex]}" var="att"> 
+                                                    <apex:repeat value="{!attributeAttrList[att]}" var="innerItem">
+                                                        <apex:outputLink rendered="{!IF(CONTAINS(innerItem.prodValues[qliList[indexAttrCOrder].Product2Id],'https'),true,false)}" value="{!innerItem.prodValues[qliList[indexAttrCOrder].Product2Id]}" id="theLink" style="text-decoration: none; color:#034370;">{!innerItem.attributeName}</apex:outputLink>
+                                                        <apex:outputText rendered="{!NOT(IF(CONTAINS(innerItem.prodValues[qliList[indexAttrCOrder].Product2Id],'https'),true,false))}" value="{!innerItem.prodValues[qliList[indexAttrCOrder].Product2Id]}"/>
+                                                    </apex:repeat>
+                                                </apex:repeat>
+                                            </td>
+                                        </apex:outputText>
+                                        <apex:variable var="indexAttrCOrder" value="{!indexAttrCOrder + 1}" />
+                                    </apex:repeat>
+                                </tr>
+                                <apex:variable var="attrIndex" value="{!attrIndex + 1}" rendered="{!IF(attrIndex < 8,true,false)}"/>
+                            </apex:repeat>
+                        </apex:outputText>
+                        <apex:outputText > <!--coverages-->
+                            <apex:repeat value="{!coveragesCustomOrder}" var="cov">
+                                <tr style="page-break-inside:avoid; vertical-align:text-bottom;">
+                                    <td><strong><apex:outputText value="{!coverageCodeLabel[cov]}"></apex:outputText></strong></td>
+                                </tr>
+                            <apex:repeat value="{!coverageAttrList[cov]}" var="innerItem">
+                                <apex:variable value="{!0}" var="indexAttrCOrder" rendered="{!IF(countRow == 0, true, false)}"/>
+                                <apex:variable value="{!4}" var="indexAttrCOrder" rendered="{!IF(countRow >= 1, true, false)}"/>
+                                <apex:variable value="{!8}" var="indexAttrCOrder" rendered="{!IF(countRow >= 2, true, false)}"/>
+                                <apex:variable value="{!12}" var="indexAttrCOrder" rendered="{!IF(countRow >= 3, true, false)}"/>
+                                <apex:variable value="{!16}" var="indexAttrCOrder" rendered="{!IF(countRow >= 4, true, false)}"/>
+                                <apex:variable value="{!20}" var="indexAttrCOrder" rendered="{!IF(countRow >= 5, true, false)}"/>
+                                <apex:variable value="{!24}" var="indexAttrCOrder" rendered="{!IF(countRow >= 6, true, false)}"/>
+                                <apex:variable value="{!28}" var="indexAttrCOrder" rendered="{!IF(countRow >= 7, true, false)}"/>
+                                <apex:variable value="{!32}" var="indexAttrCOrder" rendered="{!IF(countRow >= 8, true, false)}"/>
+                                <apex:variable value="{!36}" var="indexAttrCOrder" rendered="{!IF(countRow >= 9, true, false)}"/>
+                                <apex:outputText rendered="{!NOT(IF(CONTAINS(innerItem.attributeName,'Additional Information (Disclaimer)'),true,false))}">
+                                    <tr>
+                                        <td>
+                                            <apex:outputText value="{!innerItem.attributeName}"></apex:outputText>
+                                        </td>
+                                        <apex:repeat value="{!qliList}" var="qlim" rows="4">
+                                            <apex:outputText rendered="{!IF(indexAttrCOrder < qliListSize, true, false)}">
+                                                <td>
+                                                    <apex:outputText value="{!innerItem.prodValues[qliList[indexAttrCOrder].Product2Id]}"/>
+                                                </td>
+                                            </apex:outputText>
+                                            <apex:variable var="indexAttrCOrder" value="{!indexAttrCOrder + 1}"/>
+                                        </apex:repeat>
+                                    </tr>
+                                </apex:outputText>
+                            </apex:repeat>  
+                            </apex:repeat>
+                        </apex:outputText> 
+                    </table> 
+                    <apex:variable value="{!countRow + 1}" var="countRow" />
+                </apex:repeat>
+            </div>
+        </div>
+    </apex:outputPanel> 
+
+    <!--Disclaimer-->
+    <div style="border: solid 1px #d8dde6; page-break-inside:avoid;">
+        <p style="margin-left: 5px;">
+            AttentisHealth is an HMO/HMO-POS/HMO D-SNP plan with a Medicare contract. AttentisHealth has a contract with the State of Delaware Department of Health for HMO D-SNP. 
+        </p>
+        <p style="margin-left: 5px;">
+            Out-of-network/non-contracted providers are under no obligation to treat AttentisHealth members, except in emergency situations. Please call our customer service number or see your Evidence of Coverage for more information, including the cost-sharing that applies to out-of-network services. 
+        </p>
+    </div>
+
+</apex:page>

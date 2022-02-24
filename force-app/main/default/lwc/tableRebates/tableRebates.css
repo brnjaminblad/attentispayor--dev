@@ -1,0 +1,96 @@
+.font{
+    color: black;
+}
+
+.fontBold{
+    color: black;
+    font-weight: bold;
+}
+
+.alignCenter{
+    text-align: center;
+}
+
+.alignLeft{
+    text-align: left;
+}
+
+.borderTopSky{
+    border-top: 2px solid #509bad;
+    border-bottom: 1px solid #509bad;
+}
+
+.borderBottomSky{
+    border-bottom: 2px solid #509bad;
+}
+
+.borderLeftSky{
+    border-left: 2px solid #509bad;
+}
+
+.borderRightSky{
+    border-right: 2px solid #509bad;
+}
+
+.borderTopYellow{
+    border-top: 2px solid #c3bd6e;
+    border-bottom: 1px solid #c3bd6e;
+}
+
+.borderBottomYellow{
+    border-bottom: 2px solid #c3bd6e;
+}
+
+.borderLeftYellow{
+    border-left: 2px solid #c3bd6e;
+}
+
+.borderRightYellow{
+    border-right: 2px solid #c3bd6e;
+}
+
+.borderTopGrey{
+    border-top: 2px solid #b4b4b4;
+    border-bottom: 1px solid #b4b4b4;
+}
+
+.borderBottomGrey{
+    border-bottom: 2px solid #b4b4b4;
+}
+
+.borderLeftGrey{
+    border-left: 2px solid #b4b4b4;
+}
+
+.borderRightGrey{
+    border-right: 2px solid #b4b4b4;
+}
+
+.borderSides{
+    border-right: 1px solid grey;
+    border-left: 1px solid grey;
+}
+
+.skyblueBK{
+    background-color: #dbeff3;
+}
+
+.yellowBK{
+    background-color: #ffffca;
+}
+
+.greyBK{
+    background-color: #dadada;
+}
+
+.darkSkyblueBK{
+    background-color: #b8dfe9;
+}
+
+.darkYellowBK{
+    background-color: #ffff90;
+}
+
+.darkGreyBK{
+    background-color: #c0c0c0;
+}
